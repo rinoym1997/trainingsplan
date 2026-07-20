@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>10-Wochen-Fahrplan · 27. September</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F0F3EF;
+    --bg-card: #FFFFFF;
+    --ink: #172A20;
+    --ink-soft: #4C5C52;
+    --ink-faint: #8B968E;
+    --line: #D8DFD9;
+    --navy: #1B3A5C; --navy-bg: #E7EDF3;
+    --coral: #B23A2E; --coral-bg: #F6E4E1;
+    --teal: #2F6F62; --teal-bg: #E3EEEB;
+    --amber: #B4791F; --amber-bg: #F5E9D6;
+    --hiit: #5B4E8C; --hiit-bg: #E9E5F2;
+    --rest-bg: #EEF1EC;
+    --court: #16241C;
+    --shadow: 0 1px 2px rgba(23,42,32,.06), 0 8px 24px rgba(23,42,32,.05);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; padding:28px 20px 60px; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:940px; margin:0 auto;}
+
+  .header{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap; margin-bottom:10px;}
+  .kicker{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px;}
+  h1{font-family:'Oswald',sans-serif; font-weight:700; font-size:32px; letter-spacing:-.01em; margin:0; line-height:1.05;}
+  h1 span{color:var(--coral);}
+  .countdown{background:var(--court); color:#EDEFE9; border-radius:14px; padding:14px 20px; text-align:center; min-width:150px;}
+  .countdown .num{font-family:'Archivo Black',sans-serif; font-size:34px; line-height:1;}
+  .countdown .lbl{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; opacity:.75; margin-top:4px;}
+
+  .progress-row{display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  .progress-bar{flex:1; height:6px; background:var(--line); border-radius:99px; overflow:hidden;}
+  .progress-fill{height:100%; background:var(--teal); width:0%; transition:width .3s ease;}
+  .progress-label{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint); white-space:nowrap;}
+
+  .timeline{display:flex; gap:4px; margin:0 0 26px; padding:14px; background:var(--bg-card); border-radius:14px; box-shadow:var(--shadow); overflow-x:auto;}
+  .tl-seg{flex:1; min-width:64px; text-align:center; padding:8px 4px; border-radius:8px; position:relative; border:1.5px solid transparent; cursor:pointer; transition:transform .1s ease, filter .1s ease;}
+  .tl-seg:hover{filter:brightness(.95); transform:translateY(-1px);}
+  .tl-seg:active{transform:scale(.97);}
+  .tl-seg .tn{font-family:'Oswald',sans-serif; font-weight:600; font-size:15px;}
+  .tl-seg .tp{font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-faint); margin-top:2px; line-height:1.3;}
+  .tl-seg.blockA{background:var(--teal-bg);}
+  .tl-seg.blockB{background:var(--amber-bg);}
+  .tl-seg.today{border-color:var(--coral);}
+  .tl-seg.today::after{content:'HEUTE'; position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:var(--coral); color:#fff; font-family:'IBM Plex Mono',monospace; font-size:7.5px; letter-spacing:.06em; padding:2px 5px; border-radius:4px; white-space:nowrap;}
+  .tl-seg.event{background:var(--coral);}
+  .tl-seg.event .tn, .tl-seg.event .tp{color:#fff;}
+
+  .tabs{display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap;}
+  .tab{font-family:'Oswald',sans-serif; font-weight:500; font-size:14px; padding:10px 16px; border-radius:10px; background:var(--bg-card); border:1.5px solid var(--line); cursor:pointer; color:var(--ink-soft); box-shadow:var(--shadow);}
+  .tab.active{background:var(--court); color:#fff; border-color:var(--court);}
+  .panel{display:none;}
+  .panel.active{display:block;}
+  .loading-note{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint); padding:20px 0;}
+
+  .phase{background:var(--bg-card); border-radius:16px; padding:20px 22px; margin-bottom:16px; box-shadow:var(--shadow);}
+  .phase-head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:4px;}
+  .phase-head h2{font-family:'Oswald',sans-serif; font-size:19px; margin:0; font-weight:600;}
+  .phase-range{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint);}
+  .phase-note{font-size:13px; color:var(--ink-soft); margin:6px 0 16px; line-height:1.5;}
+  .callout{background:var(--coral-bg); border-left:3px solid var(--coral); border-radius:0 8px 8px 0; padding:10px 14px; font-size:13px; color:#5c231d; margin:6px 0 16px; line-height:1.5;}
+
+  .weeklabel{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint); margin:14px 0 8px; text-transform:uppercase; letter-spacing:.04em; scroll-margin-top:16px; border-radius:6px; padding:2px 4px; transition:background .4s ease, color .4s ease;}
+  .weeklabel.week-flash{background:var(--coral); color:#fff;}
+  .weeklabel:first-of-type{margin-top:0;}
+
+  .daygrid{display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-bottom:6px;}
+  @media (max-width:760px){ .daygrid{grid-template-columns:repeat(2,1fr);} }
+  .day{border-radius:10px; padding:10px 10px 11px; cursor:pointer; border:1.5px solid transparent; transition:transform .12s ease, opacity .2s ease;}
+  .day:active{transform:scale(.98);}
+  .day.gym{background:var(--navy-bg);}
+  .day.bad{background:var(--coral-bg);}
+  .day.cardio{background:var(--teal-bg);}
+  .day.bad3{background:var(--amber-bg);}
+  .day.hiit{background:var(--hiit-bg);}
+  .day.rest{background:var(--rest-bg);}
+  .day.event{background:var(--coral); color:#fff;}
+  .day.done{opacity:.5;}
+  .day.done .dtitle{text-decoration:line-through;}
+
+  .daytop{display:flex; justify-content:space-between; align-items:flex-start; gap:4px;}
+  .day .dname{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; color:var(--ink-faint); text-transform:uppercase;}
+  .day.event .dname{color:rgba(255,255,255,.8);}
+  .donebtn{background:transparent; border:1.5px solid rgba(0,0,0,.18); border-radius:50%; width:20px; height:20px; font-size:11px; line-height:1; cursor:pointer; flex-shrink:0; color:var(--ink-soft); padding:0;}
+  .day.done .donebtn{background:var(--teal); border-color:var(--teal); color:#fff;}
+
+  .sattoggle{display:flex; gap:4px; margin-top:6px;}
+  .stbtn{font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:.02em; padding:3px 7px; border-radius:6px; border:1px solid rgba(0,0,0,.15); background:transparent; cursor:pointer; color:var(--ink-soft);}
+  .stbtn.active{background:var(--court); color:#fff; border-color:var(--court);}
+
+  .day .dtitle{font-family:'Oswald',sans-serif; font-weight:600; font-size:13.5px; margin-top:6px; line-height:1.2;}
+  .day .dsub{font-size:11px; color:var(--ink-soft); margin-top:2px; line-height:1.3;}
+  .day.event .dsub{color:rgba(255,255,255,.85);}
+  .day .ddetail{display:none; margin-top:8px; border-top:1px solid rgba(0,0,0,.08); padding-top:8px;}
+  .day.open .ddetail{display:block;}
+  .ddetail-text{font-size:11.5px; color:var(--ink); line-height:1.5;}
+  .day.event .ddetail-text{color:#fff;}
+  .day .dtime{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-faint); margin-top:6px;}
+  .day.event .dtime{color:rgba(255,255,255,.75);}
+  .dnote{width:100%; margin-top:8px; font-family:'Inter',sans-serif; font-size:11.5px; border:1px solid var(--line); border-radius:6px; padding:6px 8px; resize:vertical; min-height:40px; background:#fff; color:var(--ink);}
+
+  .guide-hero{background:var(--court); color:#EDEFE9; border-radius:16px; padding:22px 24px; margin-bottom:16px;}
+  .guide-hero h2{font-family:'Oswald',sans-serif; font-size:20px; margin:0 0 8px;}
+  .guide-hero p{font-size:14px; line-height:1.6; color:#CBD3C7; margin:0;}
+  .guide-hero .answer{font-family:'Oswald',sans-serif; font-size:17px; color:#F3C77E; margin-top:10px;}
+
+  .rule-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;}
+  @media (max-width:700px){ .rule-grid{grid-template-columns:1fr;} }
+  .rule-card{background:var(--bg-card); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow);}
+  .rule-card h3{font-family:'Oswald',sans-serif; font-size:15px; margin:0 0 10px;}
+  .rule-card.good h3{color:var(--teal);}
+  .rule-card.bad h3{color:var(--coral);}
+  .rule-card ul{margin:0; padding-left:18px; font-size:13px; line-height:1.7; color:var(--ink-soft);}
+  .rule-card b{color:var(--ink);}
+
+  .combo{background:var(--bg-card); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); margin-bottom:16px;}
+  .combo h3{font-family:'Oswald',sans-serif; font-size:15px; margin:0 0 12px;}
+  .combo-row{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px;}
+  .combo-row:last-child{border-bottom:none;}
+  .combo-day{font-family:'IBM Plex Mono',monospace; font-weight:600; min-width:34px; color:var(--ink-faint);}
+
+  .footer{background:var(--bg-card); border-radius:16px; padding:20px 22px; margin-top:8px; box-shadow:var(--shadow);}
+  .footer h3{font-family:'Oswald',sans-serif; font-size:15px; margin:0 0 12px;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{background:var(--rest-bg); border-radius:999px; padding:7px 13px; font-size:12px; color:var(--ink-soft);}
+  .chip b{color:var(--ink); font-family:'IBM Plex Mono',monospace;}
+  .legend{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;}
+  .leg{display:flex; align-items:center; gap:5px; font-size:11px; color:var(--ink-soft);}
+  .leg-dot{width:10px; height:10px; border-radius:3px;}
+
+  .nutri-card{background:var(--bg-card); border-radius:16px; padding:20px 22px; margin-bottom:16px; box-shadow:var(--shadow);}
+  .nutri-card h3{font-family:'Oswald',sans-serif; font-size:15px; margin:0 0 12px;}
+  .nutri-table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  .nutri-table th{font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); text-align:left; padding:7px 8px; border-bottom:1px solid var(--line);}
+  .nutri-table td{padding:7px 8px; border-bottom:1px solid var(--line); color:var(--ink-soft);}
+  .nutri-table tr:last-child td{border-bottom:none;}
+  .nutri-table td.kcal{font-family:'Oswald',sans-serif; font-weight:600; color:var(--ink);}
+  .nutri-table .ddot{display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:7px;}
+  .nutri-grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:700px){ .nutri-grid2{grid-template-columns:1fr;} }
+  .disclaimer{background:var(--amber-bg); border-left:3px solid var(--amber); border-radius:0 8px 8px 0; padding:10px 14px; font-size:12.5px; color:#5c3d0d; margin-bottom:16px; line-height:1.5;}
+  .tipline{font-size:11.5px; color:var(--ink-faint); font-style:italic; margin:10px 0 0;}
+  .today-daywrap{margin-bottom:6px;}
+  .today-daywrap .day{cursor:default;}
+  .day.open{grid-column:1 / -1;}
+  .ex-table{width:100%; border-collapse:collapse; font-size:11.5px; margin-top:2px;}
+  .ex-table th{font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); text-align:left; padding:4px 6px; border-bottom:1px solid rgba(0,0,0,.12);}
+  .ex-table td{padding:6px; border-bottom:1px solid rgba(0,0,0,.06); vertical-align:top; color:var(--ink-soft);}
+  .ex-table tr:last-child td{border-bottom:none;}
+  .ex-table td.exn{font-weight:600; color:var(--ink); min-width:110px;}
+  .ex-table .exr{color:var(--ink-faint); font-size:10.5px;}
+  .ex-table input{width:62px; padding:5px 6px; border:1px solid var(--line); border-radius:6px; font-family:'IBM Plex Mono',monospace; font-size:11px; background:#fff; color:var(--ink);}
+  .blk-row{display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:6px 0; border-bottom:1px solid rgba(0,0,0,.06); font-size:11.5px;}
+  .blk-row:last-child{border-bottom:none;}
+  .blk-name{font-weight:600; color:var(--ink);}
+  .blk-plan{color:var(--ink-soft); text-align:right;}
+  .nutri-table tr.trainrow td{background:var(--court); color:#EDEFE9; font-family:'Oswald',sans-serif; font-size:12px; border-radius:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div>
+      <div class="kicker">18. Juli – 27. September · 10 Wochen</div>
+      <h1>Fahrplan bis <span>Sonntag</span></h1>
+    </div>
+    <div class="countdown">
+      <div class="num" id="cdNum">--</div>
+      <div class="lbl">Tage bis zum 27.9.</div>
+    </div>
+  </div>
+
+  <div class="progress-row">
+    <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+    <div class="progress-label" id="progLabel">0/70 dokumentiert</div>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:var(--navy-bg)"></div>Gym</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--coral-bg)"></div>Badminton</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--amber-bg)"></div>3. Badminton</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--hiit-bg)"></div>HIIT/Sprint</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--teal-bg)"></div>Cardio</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--rest-bg)"></div>Ruhe</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="t">Heute</div>
+    <div class="tab" data-tab="a">Block A · Aufbau &amp; Fettabbau</div>
+    <div class="tab" data-tab="b">Block B · Peak &amp; Schärfe</div>
+    <div class="tab" data-tab="g">3. Badminton &amp; Doppel-Sessions</div>
+    <div class="tab" data-tab="n">Ernährung</div>
+  </div>
+
+  <div class="panel active" id="panel-t"></div>
+  <div class="panel" id="panel-a"><div class="loading-note">Lädt…</div></div>
+  <div class="panel" id="panel-b"></div>
+
+  <div class="panel" id="panel-g">
+    <div class="guide-hero">
+      <h2>Wann eine 3. Badminton-Einheit?</h2>
+      <p>Matchplay liefert selbst schon intervallartige, explosive Belastung — das deckt sich mit dem, was eine Bike/Sprint-Einheit leisten soll. Eine zusätzliche Einheit obendrauf wäre doppelte Beanspruchung desselben Systems statt echtem Zusatznutzen.</p>
+      <div class="answer">→ Samstag — aber nach dem harten Freitag immer leicht: Technik, Timing, lockeres Doppel. Nie ein zweites hartes Matchplay.</div>
+      <p style="margin-top:8px">Mit Mo Gym (hart), Mi Badminton (mittel-hart) und Fr Matchplay (hart) hast du bereits drei relevante Leistungsreize pro Woche. Ein viertes hartes Training bringt im Kaloriendefizit mehr Ermüdung als Nutzen. Per Klick auf "3.Bad / HIIT" auf jeder Samstags-Karte umschaltbar auf lockeres Bike.</p>
+    </div>
+
+    <div class="guide-hero" style="background:var(--bg-card); color:var(--ink);">
+      <h2 style="color:var(--ink)">Wann 2× am Tag trainieren?</h2>
+      <p style="color:var(--ink-soft)">Grundregel: nie zwei Einheiten kombinieren, die beide das Nervensystem stark fordern — z. B. schweres Bein-Gym plus hartes Matchplay am selben Tag.</p>
+    </div>
+
+    <div class="combo">
+      <h3>Gute Kombinationen</h3>
+      <div class="combo-row"><span class="combo-day">Mo</span><span>Gym A (AM)</span><span>→</span><span>lockerer Spaziergang / Bike, 20–30 Min (PM)</span></div>
+      <div class="combo-row"><span class="combo-day">Di</span><span>Gym B (AM)</span><span>→</span><span>leichte Mobility / Technik-Shadowing (PM)</span></div>
+      <div class="combo-row"><span class="combo-day">Do</span><span>Zone-2 Cardio (AM)</span><span>→</span><span>leichte Mobility oder Spaziergang (PM)</span></div>
+    </div>
+
+    <div class="rule-grid">
+      <div class="rule-card good">
+        <h3>✓ Funktioniert</h3>
+        <ul>
+          <li><b>Hart + leicht</b> kombinieren, nie zwei harte Reize gleicher Art</li>
+          <li>2. Session an ruhigen Tagen (Do, So) einbauen — dort ist Puffer</li>
+          <li>2. Session nutzen, um das Defizit sanft zu vergrössern, ohne Erholung zu gefährden</li>
+        </ul>
+      </div>
+      <div class="rule-card bad">
+        <h3>✗ Vermeiden</h3>
+        <ul>
+          <li><b>Freitag hart + Samstag hart</b> — der Samstag bleibt immer leicht</li>
+          <li>Freitag (Matchplay) nicht mit Krafttraining koppeln; keine zwei explosiven Einheiten am selben Tag</li>
+          <li>2. Session in Deload-Woche (5) oder Event-Woche (10)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-n">
+    <div class="guide-hero">
+      <h2>Deine Zahlen</h2>
+      <p>Berechnungsbasis: 76.5 kg, 175 cm, 28 J., sitzender Alltag (Mifflin-St-Jeor-Formel). Grundumsatz ~1'720 kcal, Erhaltung am Ruhetag ~2'070 kcal, mit Training 2'350–2'650 kcal je nach Tag.</p>
+      <div class="answer">Ø ~2'100–2'150 kcal/Tag → Ziel ~0.3–0.5 kg/Woche — schützt Leistung &amp; Muskelmasse.</div>
+      <p style="margin-top:8px">Alle Trockenprodukte (Reis, Pasta, Hafer) sind <b>trocken gewogen</b>, Fleisch/Fisch <b>roh gewogen</b>. Öl, Saucen und Nüsse immer mitzählen — die unterschätzt man am leichtesten.</p>
+    </div>
+
+    <div class="disclaimer">
+      <b>Wichtig:</b> Diese Zahlen sind ein Startpunkt, keine Präzisionsmedizin — Formeln wie diese liegen typischerweise ±10–15% daneben. Nach <b>14 Tagen</b> anhand von Gewichtstrend, Bauchumfang, Leistung und Hunger nachsteuern (±100–150 kcal/Tag) — nicht an Tageswerten. Fühlt sich ein Wert dauerhaft zu niedrig an: lieber leicht anheben als durchbeissen.
+    </div>
+
+    <div class="nutri-card">
+      <h3>Kalorien- und Makroziele pro Wochentag</h3>
+      <table class="nutri-table">
+        <tr><th>Tag</th><th>Training</th><th>Ziel</th><th>Protein</th><th>Fett</th><th>Kohlenhydrate</th></tr>
+        <tr><td><span class="ddot" style="background:var(--navy-bg)"></span>Mo</td><td>Gym A (Beine, schwer)</td><td class="kcal">~2'200 kcal</td><td>150 g</td><td>65 g</td><td>~250 g</td></tr>
+        <tr><td><span class="ddot" style="background:var(--navy-bg)"></span>Di</td><td>Gym B (Oberkörper)</td><td class="kcal">~2'050 kcal</td><td>150 g</td><td>65 g</td><td>~215 g</td></tr>
+        <tr><td><span class="ddot" style="background:var(--coral-bg)"></span>Mi</td><td>Badminton moderat</td><td class="kcal">~2'350 kcal</td><td>150 g</td><td>65 g</td><td>~290 g</td></tr>
+        <tr><td><span class="ddot" style="background:var(--teal-bg)"></span>Do</td><td>Cardio leicht</td><td class="kcal">~1'950 kcal</td><td>150 g</td><td>65 g</td><td>~190 g</td></tr>
+        <tr><td><span class="ddot" style="background:var(--coral-bg)"></span>Fr</td><td>Badminton hart</td><td class="kcal">~2'450 kcal</td><td>150 g</td><td>65 g</td><td>~315 g</td></tr>
+        <tr><td><span class="ddot" style="background:var(--amber-bg)"></span>Sa</td><td>3. Badminton/Bike</td><td class="kcal">~2'100 kcal</td><td colspan="3">ohne Training: ~1'950 kcal · KH ~230 g</td></tr>
+        <tr><td><span class="ddot" style="background:var(--rest-bg)"></span>So</td><td>Ruhetag &amp; Regeneration</td><td class="kcal">~1'850 kcal</td><td>150 g</td><td>65 g</td><td>~165 g</td></tr>
+      </table>
+    </div>
+
+    <div class="combo">
+      <h3>Timing rund ums Training</h3>
+      <div class="combo-row"><span class="combo-day">2–3h</span><span>vorher</span><span>→</span><span>Protein + Kohlenhydrate (z.B. Reis/Kartoffeln + Hähnchen/Tofu)</span></div>
+      <div class="combo-row"><span class="combo-day">1–2h</span><span>danach</span><span>→</span><span>Protein + Kohlenhydrate zur Regeneration, v.a. nach Mi/Fr &amp; Gym-Tagen</span></div>
+      <div class="combo-row"><span class="combo-day">So</span><span>Ruhetag</span><span>→</span><span>Mahlzeiten gleichmässiger, mehr Gemüse/Protein, Carbs bewusst niedrig</span></div>
+    </div>
+
+    <div class="nutri-card">
+      <h3>Meal Prep — jeden Sonntag, ~90 Min.</h3>
+      <table class="nutri-table">
+        <tr><th style="width:36px">#</th><th>Schritt</th></tr>
+        <tr><td>1</td><td><b>Ofen an:</b> Ofengemüse (~1.5 kg Mix: Peperoni, Zucchetti, Broccoli, Rüebli) mit wenig Öl — parallel läuft alles andere</td></tr>
+        <tr><td>2</td><td><b>Reis kochen:</b> ~530 g trocken → Boxen Mo, Di, Do + Freitag-Post-Box</td></tr>
+        <tr><td>3</td><td><b>Poulet braten/backen:</b> ~1 kg roh, würzen, in Portionen teilen (180/180/160/150/200 g)</td></tr>
+        <tr><td>4</td><td><b>Hack anbraten:</b> 150 g mit Tomatensauce (Box Di)</td></tr>
+        <tr><td>5</td><td><b>Kartoffeln kochen:</b> ~650 g roh (Boxen Mi + Fr)</td></tr>
+        <tr><td>6</td><td><b>5× Overnight Oats:</b> je Hafer 60 g + Skyr 250 g + TK-Beeren in Gläser (Mo–Fr; Sa/So frisch anrühren, gleiches Rezept)</td></tr>
+        <tr><td>7</td><td><b>4 Eier hartkochen</b> (Di-Salat + Snacks), Boxen beschriften Mo–Fr</td></tr>
+      </table>
+      <p class="tipline">Haltbarkeit: gekochter Reis &amp; Poulet 3–4 Tage im Kühlschrank — die Freitag-Portionen (Box 5 + Post-Box) am besten einfrieren und Donnerstagabend in den Kühlschrank legen.</p>
+    </div>
+
+    <div class="nutri-card">
+      <h3>Einkaufsliste für die Woche</h3>
+      <div class="chips">
+        <div class="chip">Poulet <b>~1.3–1.4 kg</b> roh</div>
+        <div class="chip">Mageres Hack <b>150 g</b></div>
+        <div class="chip">Lachs/Fisch <b>~300 g</b> (Do optional + So)</div>
+        <div class="chip">Rind <b>150 g</b> (Fr, optional statt Poulet)</div>
+        <div class="chip">Thon <b>2 Dosen</b></div>
+        <div class="chip">Eier <b>~15 Stk.</b></div>
+        <div class="chip">Skyr/Magerquark <b>~2.5–3 kg</b></div>
+        <div class="chip">Milch <b>1 L</b></div>
+        <div class="chip">Haferflocken <b>500 g</b></div>
+        <div class="chip">Reis <b>~600 g</b> trocken</div>
+        <div class="chip">Kartoffeln <b>~1 kg</b></div>
+        <div class="chip">TK-Beeren <b>~750 g</b></div>
+        <div class="chip">Gemüse-Mix <b>~2.5 kg</b> + Salat</div>
+        <div class="chip">Bananen <b>5</b> + Obst</div>
+        <div class="chip">Reiswaffeln, Nüsse <b>~150 g</b></div>
+        <div class="chip">Wraps, Bohnen <b>1 Dose</b>, Tomatensauce</div>
+      </div>
+    </div>
+
+    <div class="nutri-card">
+      <h3>Supplements — täglich fix</h3>
+      <table class="nutri-table">
+        <tr><th style="width:70px">Zeit</th><th>Was</th><th>Warum</th></tr>
+        <tr><td>07:00</td><td><b>Kreatin Monohydrat 5 g</b> — in die Oats rühren</td><td>Bestbelegtes Supplement: Kraft &amp; Muskelerhalt im Defizit</td></tr>
+        <tr><td>07:00</td><td><b>Vitamin D3 1'000–2'000 IE</b> — zum Frühstück</td><td>Muskel- &amp; Immunfunktion; mit Fett besser aufgenommen</td></tr>
+        <tr><td>12:00</td><td><b>Omega-3 ~1 g EPA/DHA</b> — zur Mittags-Box</td><td>Herz-Kreislauf, Entzündungsregulation, Regeneration — sinnvoll, da nur ~2× Fisch/Woche im Plan</td></tr>
+        <tr><td>21:30</td><td><b>Magnesium 200–300 mg</b> — vor dem Schlafen</td><td>Schlaf &amp; Krampfneigung; Evidenz gemischt, schadet nicht</td></tr>
+        <tr><td>flexibel</td><td><b>Elektrolyte</b> — an Sauna-Tagen (Do/So), nach Mi/Fr-Badminton</td><td>Defizit + Schwitzen = schnelle Unterversorgung</td></tr>
+      </table>
+      <p class="tipline">⚠ Kreatin zieht in Woche 1–2 ca. 1–2 kg Wasser in die Muskeln — die Waage steigt kurz, obwohl du Fett verlierst. Deshalb sofort starten und den Gewichtstrend erst ab Woche 2–3 werten; Bauchumfang ist in dieser Phase der ehrlichere Messwert. Gespart werden kann: BCAAs, Fatburner, Beta-Alanin.</p>
+    </div>
+
+    <div class="nutri-card">
+      <h3>Sauna &amp; Eisbad — feste Wochenslots</h3>
+      <table class="nutri-table">
+        <tr><th style="width:52px">Tag</th><th>Was</th><th>Timing</th></tr>
+        <tr><td>Do</td><td><b>Sauna #1</b></td><td>Nach dem Zone-2, 2–3 Gänge à 12–15 Min. + Elektrolyte</td></tr>
+        <tr><td>Fr</td><td><b>Eisbad</b> (optional)</td><td>Direkt nach dem Matchplay, 3–8 Min. bei 10–15 °C — hier ist schnelle Erholung wichtiger als Anpassung</td></tr>
+        <tr><td>So</td><td><b>Sauna #2</b></td><td>Nachmittags, 2–3 Gänge; Kalt-Warm-Wechsel erlaubt</td></tr>
+      </table>
+      <p class="tipline">⚠ Nie Eisbad nach dem Krafttraining (Mo/Di) — Kaltwasser direkt nach Kraftreizen dämpft nachweislich die Muskel- und Kraftanpassung. Mindestens 6 h Abstand, besser andere Tage. Sauna nicht direkt vor harten Einheiten (Dehydrierung kostet Leistung).</p>
+    </div>
+
+    <div id="weekMenus"></div>
+
+    <div class="footer">
+      <h3>Weitere Eckpunkte</h3>
+      <div class="chips">
+        <div class="chip">Alkohol: <b>weitgehend pausiert</b></div>
+        <div class="chip">Wasser: <b>2.5–3.5 L/Tag</b></div>
+        <div class="chip">Gemüse: <b>min. 400 g/Tag</b></div>
+        <div class="chip">Schlaf: <b>7.5–9 h</b></div>
+        <div class="chip">Zieltempo: <b>0.3–0.5 kg/Woche</b></div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:11px; color:var(--ink-faint); margin-top:14px; text-align:center;">
+    ✓-Haken und Notizen werden nur auf diesem Gerät/Account gespeichert (persönlich, nicht geteilt).
+  </p>
+
+</div>
+
+<script>
+// Storage-Adapter für statisches Hosting (GitHub Pages): localStorage, pro Gerät.
+window.storage = {
+  async get(key, shared){
+    const v = localStorage.getItem('plan-' + key);
+    if(v === null) throw new Error('Key not found: ' + key);
+    return { key: key, value: v, shared: false };
+  },
+  async set(key, value, shared){
+    localStorage.setItem('plan-' + key, value);
+    return { key: key, value: value, shared: false };
+  },
+  async delete(key, shared){
+    localStorage.removeItem('plan-' + key);
+    return { key: key, deleted: true, shared: false };
+  },
+  async list(prefix, shared){
+    const keys = [];
+    for(let i = 0; i < localStorage.length; i++){
+      const k = localStorage.key(i);
+      if(k && k.startsWith('plan-' + (prefix || ''))) keys.push(k.slice(5));
+    }
+    return { keys: keys, prefix: prefix, shared: false };
+  }
+};
+</script>
+<script>
+const WEEKS = [
+ {n:1, range:'20.–26. Juli', block:'A', phase:'reaktivierung', phaseLabel:'Reaktivierung', start:'2026-07-20'},
+ {n:2, range:'27. Jul–2. Aug', block:'A', phase:'reaktivierung', phaseLabel:'Reaktivierung', start:'2026-07-27'},
+ {n:3, range:'3.–9. Aug', block:'A', phase:'aufbau', phaseLabel:'Aufbau', start:'2026-08-03'},
+ {n:4, range:'10.–16. Aug', block:'A', phase:'aufbau', phaseLabel:'Aufbau', start:'2026-08-10'},
+ {n:5, range:'17.–23. Aug', block:'A', phase:'deload', phaseLabel:'Deload', start:'2026-08-17'},
+ {n:6, range:'24.–30. Aug', block:'A', phase:'peak', phaseLabel:'Peak', start:'2026-08-24'},
+ {n:7, range:'31. Aug–6. Sep', block:'B', phase:'scharfen', phaseLabel:'Schärfen', start:'2026-08-31'},
+ {n:8, range:'7.–13. Sep', block:'B', phase:'scharfen', phaseLabel:'Schärfen', start:'2026-09-07'},
+ {n:9, range:'14.–20. Sep', block:'B', phase:'taper', phaseLabel:'Taper', start:'2026-09-14'},
+ {n:10, range:'21.–27. Sep', block:'B', phase:'event', phaseLabel:'Event-Woche', start:'2026-09-21'},
+];
+const DAYNAMES = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+
+const TEMPLATES = {
+  reaktivierung: {
+    note: 'RPE 6–7. Der Körper braucht nach Ferien/Ausfällen Zeit, sich wieder an die Reize zu gewöhnen. Mo = schwerer Beintag, Di = reiner Oberkörper — so liegen 48h zwischen Beintraining und Badminton.',
+    days: [
+      {type:'gym', title:'Gym A', sub:'Beine + Plyo, Ganzkörper', time:'65 Min', exercises:[
+        {n:'Landungs-/Pogo-Sprünge', p:'3×6 · zuerst, frisch — leise & symmetrisch landen', r:'60 Sek.'},
+        {n:'Kniebeugen', p:'3×8 · RPE 6–7 (Ref. 55–60 kg)', r:'90 Sek.'},
+        {n:'Hip Thrust', p:'3×10 · RPE 6–7', r:'75 Sek.'},
+        {n:'Split Squat', p:'3×8/Bein · leicht', r:'60 Sek.'},
+        {n:'Beinbeuger liegend', p:'3×10 · leicht', r:'60 Sek.'},
+        {n:'Wadenheben', p:'2×15 · leicht', r:'45 Sek.'},
+      ]},
+      {type:'gym', title:'Gym B', sub:'Nur Oberkörper + Core', time:'50 Min', exercises:[
+        {n:'Bankdrücken / Liegestütze', p:'3×10 · leicht-moderat', r:'75 Sek.'},
+        {n:'Rudern', p:'3×10 · moderat', r:'75 Sek.'},
+        {n:'Schulterdrücken', p:'3×10 · leicht', r:'60 Sek.'},
+        {n:'Lat Pulldown / Klimmzüge', p:'3×10 · RPE 6–7', r:'75 Sek.'},
+        {n:'Core-Zirkel', p:'2 Runden (Plank 40 Sek., Pallof 10/Seite)', r:'30 Sek.'},
+      ]},
+      {type:'bad', title:'Badminton', sub:'Technik + Multi-Shuttle', time:'60–75 Min', blocks:[
+        {n:'Einschlagen', p:'10 Min.'},
+        {n:'Shadow-Footwork', p:'6×30 Sek. alle Ecken, zügig · Pause 30 Sek.'},
+        {n:'Multi-Shuttle Smash+Kill', p:'4×10 · Pause 60 Sek.'},
+        {n:'Technik Drops/Clears', p:'15 Min.'},
+        {n:'Cool-down & Stretching', p:'10 Min.'},
+      ]},
+      {type:'cardio', title:'Zone 2', sub:'Locker, Grundlage', time:'40 Min', detail:'Joggen oder Bike bei ca. 65–70% HFmax, durchgehend. Hält dich frisch für Freitag.'},
+      {type:'bad', title:'Badminton', sub:'Matchplay, moderat', time:'60–80 Min', blocks:[
+        {n:'Warm-up', p:'10 Min.'},
+        {n:'Matchplay moderat', p:'30–40 Min.'},
+        {n:'Cool-down', p:'10 Min.'},
+      ]},
+      {type:'bad3', title:'3. Badminton', sub:'Technik, leicht', time:'45 Min', detail:'Fokus auf einen konkreten schwachen Punkt (z.B. Netzspiel, Rückhand). Nach dem Freitag bewusst locker — kein Matchplay-Druck.'},
+      {type:'rest', title:'Ruhetag', sub:'Aktive Erholung', time:'', detail:'Spaziergang 20–30 Min, Mobility 10 Min.'},
+    ],
+    hiitSat: {title:'Bike, locker', sub:'Regeneration+', time:'~25–30 Min', detail:'Ganz lockeres Tempo, optional 4×1 Min. leicht zügig. Kein harter Reiz nach dem Freitag.'}
+  },
+  aufbau: {
+    note: 'RPE 7–8. Belastung steigt sichtbar. Die 3 relevanten Reize der Woche: Mo Gym (hart), Mi Badminton (mittel-hart), Fr Matchplay (hart) — Samstag bleibt leicht.',
+    days: [
+      {type:'gym', title:'Gym A', sub:'Beine schwer + Plyo', time:'75 Min', exercises:[
+        {n:'Box Jumps', p:'3×6 @ ~50 cm · zuerst, frisch — Landung leise/stabil/symmetrisch', r:'90 Sek.'},
+        {n:'Kniebeugen', p:'4×6 · RPE 7–8 (Ref. 65–70 kg)', r:'2 Min.'},
+        {n:'RDL', p:'3×8 · RPE 7', r:'90 Sek.'},
+        {n:'Split Squat', p:'3×10/Bein · moderat', r:'60 Sek.'},
+        {n:'Nordic Curl / Leg Curl', p:'3×8 · kontrolliert', r:'75 Sek.'},
+        {n:'Adduktoren / Copenhagen', p:'3×20–30 Sek./Seite', r:'45 Sek.'},
+        {n:'Wadenheben', p:'3×15 · moderat', r:'45 Sek.'},
+      ]},
+      {type:'gym', title:'Gym B', sub:'Nur Oberkörper + Core', time:'60 Min', exercises:[
+        {n:'Bankdrücken', p:'4×8 · RPE 7–8', r:'2 Min.'},
+        {n:'Rudern', p:'4×10 · moderat-schwer', r:'75 Sek.'},
+        {n:'Schulterdrücken', p:'3×10 · moderat', r:'60 Sek.'},
+        {n:'Klimmzüge / Lat Pulldown', p:'4×8 · RPE 7–8', r:'90 Sek.'},
+        {n:'Core-Zirkel', p:'3 Runden', r:'30 Sek.'},
+      ]},
+      {type:'bad', title:'Badminton', sub:'Footwork + Multi-Shuttle', time:'75 Min', blocks:[
+        {n:'Shadow-Footwork', p:'6×30 Sek. explosiv · volle Pausen (45 Sek.)'},
+        {n:'Multi-Shuttle Smash+Kill', p:'5×12 · Pause 45–60 Sek.'},
+        {n:'Netzangriff', p:'5×10 · Pause 45 Sek.'},
+        {n:'Matchplay', p:'30 Min.'},
+      ]},
+      {type:'cardio', title:'Zone 2 +', sub:'Mit Tempowechseln', time:'45–50 Min', detail:'Grundtempo locker, 3–4× 30–45 Sek. Tempowechsel, dazwischen lockeres Tempo.'},
+      {type:'bad', title:'Badminton', sub:'Matchplay intensiv', time:'80–90 Min', blocks:[
+        {n:'Matchplay, echtes Tempo', p:'40–50 Min.'},
+        {n:'Situationstraining', p:'20 Min. (Rückstand aufholen, enge Sätze)'},
+      ]},
+      {type:'bad3', title:'3. Badminton', sub:'Technik & leichtes Doppel', time:'60 Min', detail:'Netzspiel, Aufschlag, Timing, lockeres Doppel — nach dem harten Freitag bewusst kein weiteres hartes Matchplay.'},
+      {type:'rest', title:'Ruhetag', sub:'Frei nach Bedarf', time:'', detail:'Mobility + Spaziergang, oder ganz frei.'},
+    ],
+    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~30 Min', detail:'Lockeres Tempo, optional 5×1 Min. leicht zügig / 2 Min. locker.'}
+  },
+  deload: {
+    note: 'Bewusst leichte Woche — kein Rückschritt, sondern Vorbereitung auf den nächsten harten Block. RPE 5–6, ~50–60% Volumen, kein Plyo diese Woche.',
+    days: [
+      {type:'gym', title:'Gym A', sub:'Reduziert', time:'35 Min', exercises:[
+        {n:'Kniebeugen', p:'2×8 · RPE 5–6', r:'90 Sek.'},
+        {n:'Hip Thrust', p:'2×10 · leicht', r:'60 Sek.'},
+      ]},
+      {type:'gym', title:'Gym B', sub:'Kurz, Mobility-Fokus', time:'30 Min', exercises:[
+        {n:'Bankdrücken', p:'2×8 · leicht', r:'90 Sek.'},
+        {n:'Mobility/Prehab (Hüfte, Knie, Schulter)', p:'15 Min.', r:'—'},
+      ]},
+      {type:'bad', title:'Badminton', sub:'Nur Technik', time:'45 Min', detail:'Kein hartes Matchplay — Fokus auf sauberer Ausführung.'},
+      {type:'cardio', title:'Zone 2', sub:'Ganz locker oder frei', time:'30 Min', detail:'Optional auslassen.'},
+      {type:'bad', title:'Badminton', sub:'Leicht', time:'45 Min', detail:'Fokus auf Spielfreude statt Leistung.'},
+      {type:'bad3', title:'3. Badminton', sub:'Optional aussetzen', time:'30 Min', detail:'Ganz leicht oder ausfallen lassen.'},
+      {type:'rest', title:'Ruhetag', sub:'Komplett frei', time:'', detail:'Kein Programm.'},
+    ],
+    hiitSat: {title:'Bike', sub:'Deload', time:'~20 Min', detail:'Ganz locker, oder komplett auslassen.'}
+  },
+  peak: {
+    note: 'Maximal 3 relevante Reize: Mo Gym A (hart), Mi Badminton (mittel-hart), Fr Matchplay (hart). Alles andere — inkl. Samstag — bewusst leicht.',
+    days: [
+      {type:'gym', title:'Gym A', sub:'Hart — Reiz 1/3', time:'70 Min', exercises:[
+        {n:'Box Jumps', p:'3×6 · Höhe halten — nur Landequalität zählt', r:'90 Sek.'},
+        {n:'Kniebeugen', p:'4×5 · RPE 8, kein Versagen (Ref. 72–77 kg)', r:'2–2.5 Min.'},
+        {n:'RDL', p:'3×6 · RPE 7–8', r:'2 Min.'},
+        {n:'Split Squat', p:'3×8/Bein · moderat-schwer', r:'75 Sek.'},
+      ]},
+      {type:'gym', title:'Gym B', sub:'Oberkörper moderat', time:'50 Min', exercises:[
+        {n:'Bankdrücken', p:'3×6 · RPE 7', r:'2 Min.'},
+        {n:'Rudern', p:'3×10 · moderat', r:'75 Sek.'},
+        {n:'Klimmzüge / Lat Pulldown', p:'3×8 · RPE 7', r:'90 Sek.'},
+        {n:'Core-Zirkel', p:'2 Runden', r:'30 Sek.'},
+      ]},
+      {type:'bad', title:'Badminton', sub:'Multi-Shuttle — Reiz 2/3', time:'75 Min', blocks:[
+        {n:'Shadow-Footwork', p:'6×25 Sek. explosiv · volle Pausen'},
+        {n:'Multi-Shuttle', p:'5×12 zügig · Pause 45 Sek.'},
+        {n:'Matchplay moderat', p:'20–30 Min.'},
+      ]},
+      {type:'cardio', title:'Zone 2, locker', sub:'', time:'40 Min', detail:'Nur lockeres Tempo — hält dich frisch für Freitag.'},
+      {type:'bad', title:'Badminton', sub:'Matchplay hart — Reiz 3/3', time:'90 Min', blocks:[
+        {n:'Matchplay, wettkampfnah', p:'50–60 Min.'},
+      ]},
+      {type:'bad3', title:'3. Badminton', sub:'Leicht — Technik/Doppel', time:'45 Min', detail:'Nach dem harten Freitag ausschliesslich Technik, Timing oder lockeres Doppel. Kein viertes hartes Training.'},
+      {type:'rest', title:'Ruhetag', sub:'Übergang vorbereiten', time:'', detail:'Aktive Erholung, dann Start Block B.'},
+    ],
+    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~25 Min', detail:'Ganz locker — reine Bewegung, kein Reiz.'}
+  },
+  scharfen: {
+    note: 'Volumen runter, Intensität und Frische hoch — jetzt zählt Schnelligkeit, nicht mehr Maximalkraft.',
+    days: [
+      {type:'gym', title:'Gym A', sub:'Kurz & schwer + Plyo', time:'50 Min', exercises:[
+        {n:'Box Jumps', p:'3×4 · Qualität — leise, stabile Landung', r:'2 Min.'},
+        {n:'Kniebeugen', p:'3×5 · RPE 7–8 (Ref. 65–70 kg)', r:'2.5 Min.'},
+        {n:'Hip Thrust', p:'2×8 · RPE 7', r:'90 Sek.'},
+      ]},
+      {type:'gym', title:'Gym B', sub:'Oberkörper kurz', time:'40 Min', exercises:[
+        {n:'Bankdrücken', p:'3×5 · RPE 7–8', r:'2.5 Min.'},
+        {n:'Rudern', p:'2×8 · moderat', r:'90 Sek.'},
+        {n:'Core-Zirkel', p:'2 Runden', r:'30 Sek.'},
+      ]},
+      {type:'bad', title:'Badminton', sub:'Schnelligkeit & Tempo', time:'60 Min', blocks:[
+        {n:'Shadow-Footwork', p:'8×20 Sek. maximal explosiv · volle Pausen (60 Sek.)'},
+        {n:'Multi-Shuttle-Sequenzen', p:'6×15 Sek. · Pause 45–60 Sek.'},
+        {n:'Fokus', p:'Jede Wiederholung mit maximaler Schärfe'},
+      ]},
+      {type:'cardio', title:'Zone 2', sub:'Kurz oder frei', time:'30 Min', detail:'Frische geht vor zusätzlichem Reiz.'},
+      {type:'bad', title:'Badminton', sub:'Matchplay hart', time:'60 Min', blocks:[
+        {n:'Matchplay, volle Intensität', p:'wettkampfnah'},
+      ]},
+      {type:'bad3', title:'3. Badminton', sub:'Technik/Timing, leicht', time:'45 Min', detail:'Die Matchsimulation ist der Freitag — heute nur Technik und Timing.'},
+      {type:'rest', title:'Ruhetag', sub:'Vollständige Erholung', time:'', detail:'Kein Kompromiss mehr.'},
+    ],
+    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~20 Min', detail:'Nur Bewegung, kein Reiz.'}
+  },
+  taper: {
+    note: 'Reduktion beginnt — Kraft und Schärfe erhalten, kein neues Ermüdungsrisiko mehr eingehen.',
+    days: [
+      {type:'gym', title:'Gym A', sub:'Erhalt', time:'30 Min', exercises:[
+        {n:'Kniebeugen', p:'2×5 · RPE 7, Gewicht halten', r:'2 Min.'},
+      ]},
+      {type:'gym', title:'Gym B', sub:'Erhalt + Mobility', time:'30 Min', exercises:[
+        {n:'Bankdrücken', p:'2×5 · moderat', r:'2 Min.'},
+        {n:'Mobility', p:'15 Min.', r:'—'},
+      ]},
+      {type:'bad', title:'Badminton', sub:'Technik/Tempo', time:'45 Min', detail:'Locker-scharf, kein Erschöpfungstraining.'},
+      {type:'cardio', title:'Frei', sub:'Ganz locker', time:'20 Min', detail:'Oder komplett auslassen.'},
+      {type:'bad', title:'Badminton', sub:'Kontrolliertes Matchplay', time:'45–50 Min', detail:'Intensiv, aber mit Gefühl für die Grenze.'},
+      {type:'bad3', title:'3. Badminton', sub:'Leicht', time:'40 Min', detail:'Technik/Timing — kein zusätzliches Ermüdungsrisiko.'},
+      {type:'rest', title:'Ruhetag', sub:'Komplett frei', time:'', detail:'Kein Programm.'},
+    ],
+    hiitSat: {title:'Bike', sub:'Reduziert', time:'~15–20 Min', detail:'Ganz locker, nur Auffrischung.'}
+  },
+  event: {
+    note: 'Letzte Woche vor dem 27.9. — an deinen realen Badminton-Tagen (Mi/Fr) ausgerichtet. Frische schlägt jetzt jedes zusätzliche Training.',
+    days: [
+      {type:'gym', title:'Gym-Aktivierung', sub:'Kurz, RPE 5–6', time:'25–35 Min', exercises:[
+        {n:'Kniebeugen', p:'2×5 · leicht', r:'90 Sek.'},
+        {n:'Bankdrücken', p:'2×5 · leicht', r:'90 Sek.'},
+        {n:'Mobility', p:'10 Min.', r:'—'},
+      ]},
+      {type:'rest', title:'Frei', sub:'Oder Mobility', time:'', detail:'Vollständige Erholung.'},
+      {type:'bad', title:'Badminton', sub:'Schnell & sauber', time:'35–45 Min', blocks:[
+        {n:'Kurze scharfe Sequenzen', p:'wenig Volumen, volle Pausen'},
+        {n:'Regel', p:'Nichts Neues ausprobieren'},
+      ]},
+      {type:'rest', title:'Frei', sub:'', time:'', detail:'Ernährung, Schlaf, Kopf freimachen.'},
+      {type:'bad3', title:'Leichtes Timing', sub:'Einschlagen', time:'20–30 Min', detail:'Nur Timing und Gefühl — keine Belastung mehr aufbauen.'},
+      {type:'rest', title:'Komplett frei', sub:'Vorbereitung', time:'', detail:'Früh schlafen, Tasche packen.'},
+      {type:'event', title:'27. September', sub:'Der Tag', time:'', detail:'Hier zeigt sich, was die letzten 10 Wochen aufgebaut haben.'},
+    ]
+  },
+};
+
+let dayLog = {};     // {dateKey: {done:bool, note:string, ex:{i:{w,s}}}}
+let satToggles = {}; // {dateKey: 'bad3' | 'hiit'}
+
+function addDays(dateStr, n){ const d = new Date(dateStr + 'T00:00:00'); d.setDate(d.getDate() + n); return d; }
+function toISO(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function fmtDate(d){ return d.getDate() + '.' + (d.getMonth()+1) + '.'; }
+
+async function loadState(){
+  try{ const r = await window.storage.get('day-log', false); if(r && r.value) dayLog = JSON.parse(r.value); }catch(e){ dayLog = {}; }
+  try{ const r2 = await window.storage.get('sat-toggles', false); if(r2 && r2.value) satToggles = JSON.parse(r2.value); }catch(e){ satToggles = {}; }
+}
+async function saveDayLog(){ try{ await window.storage.set('day-log', JSON.stringify(dayLog), false); }catch(e){ console.error('Speichern fehlgeschlagen', e); } }
+async function saveSatToggles(){ try{ await window.storage.set('sat-toggles', JSON.stringify(satToggles), false); }catch(e){ console.error('Speichern fehlgeschlagen', e); } }
+
+function updateProgress(){
+  const total = WEEKS.length * 7;
+  let done = 0;
+  Object.values(dayLog).forEach(v=>{ if(v && v.done) done++; });
+  document.getElementById('progFill').style.width = Math.round(done/total*100) + '%';
+  document.getElementById('progLabel').textContent = done + '/' + total + ' dokumentiert';
+}
+
+function renderTimeline(){
+  const today = new Date();
+  const el = document.getElementById('timeline');
+  el.innerHTML = '';
+  WEEKS.forEach(w=>{
+    const start = new Date(w.start + 'T00:00:00');
+    const end = addDays(w.start, 6);
+    const isToday = today >= start && today <= new Date(end.getTime() + 86400000 - 1);
+    const seg = document.createElement('div');
+    let cls = 'tl-seg ' + (w.block === 'A' ? 'blockA' : 'blockB');
+    if(w.n === 10) cls += ' event';
+    if(isToday) cls += ' today';
+    seg.className = cls;
+    seg.innerHTML = '<div class="tn">W'+w.n+'</div><div class="tp">'+w.phaseLabel+'</div>';
+    seg.title = 'Woche '+w.n+' anzeigen';
+    seg.addEventListener('click', ()=> goToWeek(w));
+    el.appendChild(seg);
+  });
+}
+
+function renderCountdown(){
+  const today = new Date();
+  const event = new Date('2026-09-27T00:00:00');
+  const days = Math.max(0, Math.ceil((event - today) / 86400000));
+  document.getElementById('cdNum').textContent = days;
+}
+
+function renderDayCard(phaseKey, weekStart, dayIdx){
+  const tpl = TEMPLATES[phaseKey];
+  const date = addDays(weekStart, dayIdx);
+  const dkey = toISO(date);
+  const isSat = dayIdx === 5 && !!tpl.hiitSat;
+  const mode = isSat ? (satToggles[dkey] || 'bad3') : null;
+  const content = (isSat && mode === 'hiit') ? tpl.hiitSat : tpl.days[dayIdx];
+  const cardType = (isSat && mode === 'hiit') ? 'hiit' : tpl.days[dayIdx].type;
+  const log = dayLog[dkey] || {};
+  const exLog = log.ex || {};
+
+  const div = document.createElement('div');
+  div.className = 'day ' + cardType + (log.done ? ' done' : '');
+
+  let satHtml = '';
+  if(isSat){
+    satHtml = '<div class="sattoggle">' +
+      '<button class="stbtn '+(mode==='bad3'?'active':'')+'" data-mode="bad3">3.Bad</button>' +
+      '<button class="stbtn '+(mode==='hiit'?'active':'')+'" data-mode="hiit">Bike/HIIT</button>' +
+    '</div>';
+  }
+
+  let detailInner = '';
+  if(content.exercises){
+    detailInner = '<table class="ex-table"><tr><th>Übung</th><th>Plan</th><th>kg</th><th>Sätze ✓</th></tr>';
+    content.exercises.forEach((ex, i) => {
+      const el = exLog[i] || {};
+      detailInner += '<tr><td class="exn">'+ex.n+'</td>'+
+        '<td>'+ex.p+(ex.r && ex.r !== '—' ? '<br><span class="exr">Pause '+ex.r+'</span>' : '')+'</td>'+
+        '<td><input class="exi" data-ex="'+i+'" data-f="w" value="'+(el.w||'')+'" placeholder="kg"></td>'+
+        '<td><input class="exi" data-ex="'+i+'" data-f="s" value="'+(el.s||'')+'" placeholder="3×8"></td></tr>';
+    });
+    detailInner += '</table>';
+  } else if(content.blocks){
+    detailInner = content.blocks.map(b => '<div class="blk-row"><span class="blk-name">'+b.n+'</span><span class="blk-plan">'+b.p+'</span></div>').join('');
+  } else {
+    detailInner = '<div class="ddetail-text">'+(content.detail||'')+'</div>';
+  }
+
+  div.innerHTML =
+    '<div class="daytop">'+
+      '<div class="dname">'+DAYNAMES[dayIdx]+' · '+fmtDate(date)+'</div>'+
+      '<button class="donebtn" type="button">'+(log.done?'✓':'○')+'</button>'+
+    '</div>'+
+    satHtml +
+    '<div class="dtitle">'+content.title+'</div>'+
+    '<div class="dsub">'+content.sub+'</div>'+
+    (content.time ? '<div class="dtime">'+content.time+'</div>' : '')+
+    '<div class="ddetail">'+
+      detailInner +
+      '<textarea class="dnote" placeholder="Notiz (Gefühl, Kniereaktion, Anpassung…)">'+(log.note||'')+'</textarea>'+
+    '</div>';
+
+  div.addEventListener('click', (e)=>{
+    if(e.target.closest('.donebtn') || e.target.closest('.sattoggle') || e.target.closest('.dnote') || e.target.closest('.exi')) return;
+    div.classList.toggle('open');
+  });
+
+  div.querySelector('.donebtn').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const cur = dayLog[dkey] || {};
+    cur.done = !cur.done;
+    dayLog[dkey] = cur;
+    div.classList.toggle('done', cur.done);
+    e.currentTarget.textContent = cur.done ? '✓' : '○';
+    updateProgress();
+    saveDayLog();
+  });
+
+  const noteEl = div.querySelector('.dnote');
+  noteEl.addEventListener('click', e=>e.stopPropagation());
+  noteEl.addEventListener('blur', ()=>{
+    const cur = dayLog[dkey] || {};
+    cur.note = noteEl.value;
+    dayLog[dkey] = cur;
+    saveDayLog();
+  });
+
+  div.querySelectorAll('.exi').forEach(inp=>{
+    inp.addEventListener('click', e=>e.stopPropagation());
+    inp.addEventListener('change', ()=>{
+      const cur = dayLog[dkey] || {};
+      cur.ex = cur.ex || {};
+      const i = inp.dataset.ex;
+      cur.ex[i] = cur.ex[i] || {};
+      cur.ex[i][inp.dataset.f] = inp.value;
+      dayLog[dkey] = cur;
+      saveDayLog();
+    });
+  });
+
+  if(isSat){
+    div.querySelectorAll('.stbtn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        satToggles[dkey] = btn.dataset.mode;
+        saveSatToggles();
+        renderAll();
+      });
+    });
+  }
+
+  return div;
+}
+
+function renderPhaseGroup(weeksInGroup, phaseKey){
+  const tpl = TEMPLATES[phaseKey];
+  const wrap = document.createElement('div');
+  wrap.className = 'phase';
+  const rangeLabel = weeksInGroup.length > 1
+    ? 'Woche ' + weeksInGroup[0].n + '–' + weeksInGroup[weeksInGroup.length-1].n
+    : 'Woche ' + weeksInGroup[0].n;
+  wrap.innerHTML = '<div class="phase-head"><h2>'+weeksInGroup[0].phaseLabel+'</h2><span class="phase-range">'+rangeLabel+'</span></div>';
+
+  if(phaseKey === 'deload'){
+    const call = document.createElement('div');
+    call.className = 'callout';
+    call.textContent = tpl.note;
+    wrap.appendChild(call);
+  } else {
+    const note = document.createElement('div');
+    note.className = 'phase-note';
+    note.textContent = tpl.note;
+    wrap.appendChild(note);
+  }
+
+  weeksInGroup.forEach(w=>{
+    const label = document.createElement('div');
+    label.className = 'weeklabel';
+    label.id = 'week-' + w.n;
+    label.textContent = 'Woche ' + w.n + ' · ' + w.range;
+    wrap.appendChild(label);
+    const grid = document.createElement('div');
+    grid.className = 'daygrid';
+    for(let i=0;i<7;i++) grid.appendChild(renderDayCard(w.phase, w.start, i));
+    wrap.appendChild(grid);
+  });
+
+  return wrap;
+}
+
+function renderBlock(blockKey, targetId){
+  const el = document.getElementById(targetId);
+  el.innerHTML = '';
+  const weeks = WEEKS.filter(w=>w.block===blockKey);
+  let i=0;
+  while(i < weeks.length){
+    let j=i;
+    while(j+1 < weeks.length && weeks[j+1].phase === weeks[i].phase) j++;
+    el.appendChild(renderPhaseGroup(weeks.slice(i,j+1), weeks[i].phase));
+    i = j+1;
+  }
+}
+
+const NUTRITION = [
+ {label:'Gym A (Beine, schwer)', kcal:"~2'200", c:'~250 g'},
+ {label:'Gym B (Oberk\u00f6rper)', kcal:"~2'050", c:'~215 g'},
+ {label:'Badminton moderat', kcal:"~2'350", c:'~290 g'},
+ {label:'Cardio leicht', kcal:"~1'950", c:'~190 g'},
+ {label:'Badminton hart', kcal:"~2'450", c:'~315 g'},
+ {label:'3. Badminton/Bike', kcal:"~2'100 (ohne Training ~1'950)", c:'~230 g'},
+ {label:'Ruhetag & Regeneration', kcal:"~1'850", c:'~165 g'},
+];
+
+const MENUS = [
+ [['07:00','Frühstück','Overnight Oats (aus dem Prep): Hafer (60 g trocken), Skyr (250 g), Beeren',500],
+  ['12:00','Mittagessen','Prep-Box 1: Poulet (180 g roh), Reis (110 g trocken), Ofengemüse',700],
+  ['16:30','Pre-Workout-Snack','Magerquark (250 g), Apfel, Nüsse (20 g)',450],
+  ['18:00','Training','Gym A — Beine schwer',0],
+  ['19:45','Abendessen','Omelette (3 Eier) mit Gemüse & 2 Scheiben Brot',550]],
+ [['07:00','Frühstück','Overnight Oats (aus dem Prep)',500],
+  ['12:00','Mittagessen','Prep-Box 2: Hack-Reis-Bowl — mageres Hack (150 g roh), Reis (100 g trocken), Tomatensauce',700],
+  ['16:30','Pre-Workout-Snack','Protein-Shake + Nüsse (20 g)',350],
+  ['18:00','Training','Gym B — Oberkörper',0],
+  ['19:45','Abendessen','Thunfisch-Salat mit Prep-Ei, Bohnen & Olivenöl (1 EL)',500]],
+ [['07:00','Frühstück','Overnight Oats (aus dem Prep)',500],
+  ['12:00','Mittagessen','Prep-Box 3: Poulet (180 g roh), Kartoffeln (350 g roh), Ofengemüse',700],
+  ['15:00','Snack','Nüsse (25 g) + Obst',400],
+  ['16:45','Pre-Badminton','Banane + Reiswaffeln',200],
+  ['18:30','Training','Badminton — moderat',0],
+  ['20:30','Post-Training','Quark-Bowl (250 g) mit Beeren, Honig & Hafer (40 g)',550]],
+ [['07:00','Frühstück','Overnight Oats (aus dem Prep)',500],
+  ['12:00','Mittagessen','Prep-Box 4: Poulet (160 g roh), Reis (90 g trocken), Brokkoli — oder frisch: Lachs',650],
+  ['16:30','Snack','Skyr (300 g)',300],
+  ['18:00','Training','Zone-2 Cardio, locker',0],
+  ['19:30','Abendessen','Grosser Salat mit Prep-Poulet (150 g) & Olivenöl (1 EL)',500]],
+ [['07:00','Frühstück','Overnight Oats (aus dem Prep)',500],
+  ['12:00','Mittagessen','Prep-Box 5: Rind oder Poulet (150 g roh), Kartoffeln (300 g roh), Salat',600],
+  ['16:45','Pre-Badminton','Banane + Reiswaffeln',200],
+  ['18:30','Training','Badminton — Matchplay hart',0],
+  ['20:30','Post-Training','Post-Box (gross): Poulet (200 g roh), Reis (120 g trocken), Gemüse',800],
+  ['22:00','Spät-Snack','Skyr + Obst',350]],
+ [['08:00','Frühstück','Overnight Oats (frisch angerührt, gleiches Rezept)',500],
+  ['10:00','Training','3. Badminton / Bike (leicht)',0],
+  ['12:00','Mittagessen','Reis-Bowl: Poulet (170 g roh), Reis (110 g trocken), Gemüse',700],
+  ['16:00','Snack','Quark + Banane',400],
+  ['19:00','Abendessen','Wrap mit Thon/Poulet & Salat',500]],
+ [['09:00','Frühstück','Overnight Oats (frisch angerührt, gleiches Rezept)',500],
+  ['13:00','Mittagessen','Poulet/Tofu (180 g roh) mit viel Gemüse & Reis (70 g trocken)',600],
+  ['16:00','Snack','Skyr oder Shake',250],
+  ['17:00','Prep','Meal Prep für die neue Woche (~90 Min)',0],
+  ['19:00','Abendessen','Fisch oder Magerquark-Bowl mit Salat & Olivenöl',500]],
+];
+
+function menuTableHtml(m){
+  let rows = '<tr><th style="width:52px">Zeit</th><th>Mahlzeit</th><th style="width:48px">kcal</th></tr>';
+  m.forEach(x => {
+    if(x[3] === 0){
+      rows += '<tr class="trainrow"><td>'+x[0]+'</td><td colspan="2">&#9889; '+x[2]+'</td></tr>';
+    } else {
+      rows += '<tr><td>'+x[0]+'</td><td><b>'+x[1]+':</b> '+x[2]+'</td><td class="kcal">'+x[3]+'</td></tr>';
+    }
+  });
+  return '<table class="nutri-table">'+rows+'</table>';
+}
+
+function renderWeekMenus(){
+  const el = document.getElementById('weekMenus');
+  if(!el) return;
+  el.innerHTML = '<h3 style="font-family:Oswald,sans-serif; font-size:16px; margin:4px 0 12px;">Tagespläne mit Uhrzeiten</h3>';
+  const grid = document.createElement('div');
+  grid.className = 'nutri-grid2';
+  MENUS.forEach((m, di) => {
+    const c = document.createElement('div');
+    c.className = 'nutri-card';
+    c.innerHTML = '<h3>'+DAYNAMES[di]+' · '+NUTRITION[di].label+' · '+NUTRITION[di].kcal+' kcal</h3>' + menuTableHtml(m);
+    grid.appendChild(c);
+  });
+  el.appendChild(grid);
+  const tip = document.createElement('p');
+  tip.className = 'tipline';
+  tip.textContent = 'Zeiten gehen von Abendtraining (~18:00–18:30, Sa vormittags) aus — verschiebt sich dein Training, verschieb die Pre-/Post-Mahlzeiten einfach mit. Mahlzeiten sind frei austauschbar, solange Protein-Anker und Tagessumme stimmen.';
+  el.appendChild(tip);
+}
+
+const SUPPS_DAILY = [
+ ['07:00','Kreatin 5 g','direkt in die Overnight Oats rühren'],
+ ['07:00','Vitamin D3 1\'000–2\'000 IE','zum Frühstück (mit Fett)'],
+ ['12:00','Omega-3 (~1 g EPA/DHA)','zur Mittags-Box'],
+ ['21:30','Magnesium 200–300 mg','vor dem Schlafen'],
+];
+const RECOVERY = [
+ {items:[], warn:'Kein Eisbad heute — Kaltwasser nach dem Krafttraining dämpft die Muskel- und Kraftanpassung.'},
+ {items:[], warn:'Kein Eisbad heute — Kaltwasser nach dem Krafttraining dämpft die Muskel- und Kraftanpassung.'},
+ {items:[['nach Training','Elektrolyte','lange Badminton-Session — 500 ml Wasser + Elektrolyte']]},
+ {items:[['~19:15','Sauna #1','2–3 Gänge à 12–15 Min., nach dem Zone-2'],['danach','Elektrolyte','500–750 ml Wasser dazu']]},
+ {items:[['~20:15','Eisbad (optional)','3–8 Min. bei 10–15 °C, direkt nach dem Matchplay'],['danach','Elektrolyte','nach hartem Training + Kälte auffüllen']]},
+ {items:[]},
+ {items:[['nachmittags','Sauna #2','2–3 Gänge à 12–15 Min., Kalt-Warm-Wechsel erlaubt'],['danach','Elektrolyte','500–750 ml Wasser dazu']]},
+];
+
+function findToday(){
+  const now = new Date();
+  for(const w of WEEKS){
+    const start = new Date(w.start + 'T00:00:00');
+    const diff = Math.floor((now - start) / 86400000);
+    if(diff >= 0 && diff < 7) return {week:w, dayIdx:diff};
+  }
+  return null;
+}
+
+function renderToday(){
+  const el = document.getElementById('panel-t');
+  if(!el) return;
+  el.innerHTML = '';
+  const now = new Date();
+  const t = findToday();
+
+  if(!t){
+    const planStart = new Date('2026-07-20T00:00:00');
+    if(now < planStart){
+      const days = Math.max(1, Math.ceil((planStart - now) / 86400000));
+      el.innerHTML = '<div class="guide-hero"><h2>Start in '+days+' Tag'+(days===1?'':'en')+' — Montag, 20. Juli</h2>'+
+        '<p>Nutze die Zeit: Einkauf nach dem Ernährungs-Tab planen, Schlafrhythmus einpendeln, Courts für Mittwoch und Freitag buchen. Ab Montag zeigt dieser Tab jeden Tag automatisch dein Training, deine Kalorienziele und ein einfaches Menü.</p></div>';
+    } else {
+      el.innerHTML = '<div class="guide-hero"><h2>Plan abgeschlossen</h2><p>Der 27. September liegt hinter dir. Zeit für ein Fazit — und einen Erhaltungsplan.</p></div>';
+    }
+    return;
+  }
+
+  const {week, dayIdx} = t;
+  const isEvent = week.phase === 'event';
+  const isDeload = week.phase === 'deload';
+
+  const head = document.createElement('div');
+  head.className = 'guide-hero';
+  head.innerHTML = '<h2>'+DAYNAMES[dayIdx]+', '+fmtDate(now)+' · Woche '+week.n+' — '+week.phaseLabel+'</h2>'+
+    '<p>'+TEMPLATES[week.phase].note+'</p>';
+  el.appendChild(head);
+
+  const lbl = document.createElement('div'); lbl.className = 'weeklabel'; lbl.textContent = 'Heutiges Training';
+  el.appendChild(lbl);
+  const wrap = document.createElement('div'); wrap.className = 'today-daywrap';
+  const card = renderDayCard(week.phase, week.start, dayIdx);
+  card.classList.add('open');
+  wrap.appendChild(card);
+  el.appendChild(wrap);
+
+  const n = NUTRITION[dayIdx];
+  const nl = document.createElement('div'); nl.className = 'weeklabel'; nl.textContent = 'Heutige Ernährung';
+  el.appendChild(nl);
+  const nc = document.createElement('div'); nc.className = 'nutri-card';
+  let noteHtml = '';
+  if(isEvent) noteHtml = '<div class="disclaimer" style="margin-top:12px; margin-bottom:0;">Event-Woche: kein Defizit mehr — iss ungefähr auf Erhalt (~2\'000–2\'200 kcal), ab Donnerstag Kohlenhydrate eher hoch, damit die Speicher am Sonntag voll sind.</div>';
+  else if(isDeload) noteHtml = '<div class="disclaimer" style="margin-top:12px; margin-bottom:0;">Deload-Woche: weniger Trainingsvolumen — an Trainingstagen ~100–150 kcal tiefer essen, oder Werte halten und diese Woche einen langsameren Verlust akzeptieren.</div>';
+  nc.innerHTML = '<h3>'+n.label+' · Ziel '+n.kcal+' kcal</h3><div class="chips">'+
+    '<div class="chip">Protein: <b>150 g</b></div>'+
+    '<div class="chip">Fett: <b>~65 g</b></div>'+
+    '<div class="chip">Kohlenhydrate: <b>'+n.c+'</b></div>'+
+    '<div class="chip">Wasser: <b>2.5–3.5 L</b></div>'+
+  '</div>' + noteHtml;
+  el.appendChild(nc);
+
+  const sc = document.createElement('div'); sc.className = 'nutri-card';
+  let srows = '<tr><th style="width:78px">Zeit</th><th>Supplement / Recovery</th></tr>';
+  SUPPS_DAILY.forEach(x => { srows += '<tr><td>'+x[0]+'</td><td><b>'+x[1]+'</b> — '+x[2]+'</td></tr>'; });
+  const rec = RECOVERY[dayIdx] || {items:[]};
+  const skipRecovery = (week.phase === 'event' && dayIdx === 4);
+  if(!skipRecovery){
+    (rec.items||[]).forEach(x => { srows += '<tr class="trainrow"><td>'+x[0]+'</td><td>'+x[1]+(x[2]?' — '+x[2]:'')+'</td></tr>'; });
+  }
+  sc.innerHTML = '<h3>Supplements &amp; Recovery heute</h3><table class="nutri-table">'+srows+'</table>' +
+    (rec.warn && !skipRecovery ? '<p class="tipline">⚠ '+rec.warn+'</p>' : '');
+  el.appendChild(sc);
+
+  const mc = document.createElement('div'); mc.className = 'nutri-card';
+  mc.innerHTML = '<h3>Tagesplan Essen — was &amp; wann</h3>' + menuTableHtml(MENUS[dayIdx]) +
+    '<p class="tipline">Zeiten = Annahme Abendtraining (~18:00–18:30, Sa vormittags). Verschiebt sich dein Training, verschieb Pre-/Post-Mahlzeiten mit. Mahlzeiten frei austauschbar, solange Protein-Anker und Tagessumme stimmen.</p>';
+  el.appendChild(mc);
+
+  const rc = document.createElement('div'); rc.className = 'footer';
+  rc.innerHTML = '<h3>Heute dran denken</h3><div class="chips">'+
+    '<div class="chip">Training abhaken + Notiz auf der Karte oben</div>'+
+    '<div class="chip">Kein Alkohol</div>'+
+    '<div class="chip">7.5–9 h Schlaf</div>'+
+    (dayIdx===6 ? '<div class="chip"><b>Meal Prep</b> für die neue Woche (~90 Min)</div><div class="chip"><b>Wochen-Check:</b> Gewichtstrend notieren</div>' : '')+
+  '</div>';
+  el.appendChild(rc);
+}
+
+function renderAll(){
+  renderToday();
+  renderBlock('A','panel-a');
+  renderBlock('B','panel-b');
+  renderWeekMenus();
+  updateProgress();
+}
+
+async function init(){
+  renderTimeline();
+  renderCountdown();
+  await loadState();
+  renderAll();
+}
+init();
+
+function showTab(key){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab === key));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id === 'panel-'+key));
+}
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=> showTab(tab.dataset.tab));
+});
+
+function goToWeek(w){
+  showTab(w.block === 'A' ? 'a' : 'b');
+  requestAnimationFrame(()=>{
+    const target = document.getElementById('week-' + w.n);
+    if(target){
+      target.scrollIntoView({behavior:'smooth', block:'start'});
+      target.classList.add('week-flash');
+      setTimeout(()=> target.classList.remove('week-flash'), 1600);
+    }
+  });
+}
+</script>
+</body>
+</html>
