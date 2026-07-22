@@ -949,11 +949,11 @@ const MORNING = [
 const RECOVERY = [
  {items:[], warn:'Kein Eisbad heute — Kaltwasser nach dem Krafttraining dämpft die Muskel- und Kraftanpassung.'},
  {items:[], warn:'Kein Eisbad heute — Kaltwasser nach dem Krafttraining dämpft die Muskel- und Kraftanpassung.'},
- {items:[['nach Training','Elektrolyte','lange Badminton-Session — 500 ml Wasser + Elektrolyte']]},
- {items:[['~19:15','Sauna #1','2–3 Gänge à 12–15 Min., nach dem Zone-2'],['danach','Elektrolyte','500–750 ml Wasser dazu']]},
- {items:[['~20:15','Eisbad (optional)','3–8 Min. bei 10–15 °C, direkt nach dem Matchplay'],['danach','Elektrolyte','nach hartem Training + Kälte auffüllen']]},
+ {items:[['20:15','Elektrolyte','500 ml Wasser nach der langen Badminton-Session']]},
+ {items:[['19:15','Sauna #1','2–3 Gänge à 12–15 Min., nach dem Zone-2'],['20:00','Elektrolyte','500–750 ml Wasser dazu']]},
+ {items:[['20:15','Eisbad (optional)','3–8 Min. bei 10–15 °C, direkt nach dem Matchplay'],['21:00','Elektrolyte','nach hartem Training + Kälte auffüllen']]},
  {items:[]},
- {items:[['nachmittags','Sauna #2','2–3 Gänge à 12–15 Min., Kalt-Warm-Wechsel erlaubt'],['danach','Elektrolyte','500–750 ml Wasser dazu']]},
+ {items:[['15:00','Sauna #2','2–3 Gänge à 12–15 Min., Kalt-Warm-Wechsel erlaubt'],['16:15','Elektrolyte','500–750 ml Wasser dazu']]},
 ];
 
 function findToday(){
@@ -994,6 +994,11 @@ function renderToday(){
   head.innerHTML = '<h2>'+DAYNAMES[dayIdx]+', '+fmtDate(now)+' · Woche '+week.n+' — '+week.phaseLabel+'</h2>'+
     '<p>'+TEMPLATES[week.phase].note+'</p>';
   el.appendChild(head);
+
+  const sched = document.createElement('div'); sched.className = 'nutri-card';
+  sched.innerHTML = '<h3>Tagesablauf heute</h3>' + scheduleHtml(dayIdx, week) +
+    '<p class="tipline">Vorschlag auf Basis von Abendtraining (~18:00–18:30, Sa vormittags). Verschiebt sich dein Training, verschieben sich Pre-/Post-Mahlzeiten mit.</p>';
+  el.appendChild(sched);
 
   const isRestWeek = (week.phase === 'deload' || week.phase === 'event');
   const morn = document.createElement('div'); morn.className = 'nutri-card';
@@ -1075,6 +1080,54 @@ const PREP = [
  ['Meal Prep', 'Einkauf erledigt? Boxen &amp; Gläser bereit · 17:00 Prep einplanen'],
 ];
 
+function buildDaySchedule(dayIdx, week){
+  const rows = [];
+  const isSat = dayIdx === 5, isSun = dayIdx === 6;
+  const wake = isSun ? '08:30' : (isSat ? '07:30' : '06:15');
+  rows.push([wake, 'wake', 'Aufstehen', isSun ? 'Ausschlafen erlaubt' : 'Glas Wasser, Fenster auf']);
+  if(!isSun && !isSat) rows.push(['06:30', 'move', 'Morgen-Session (optional, 15 Min)', 'Hüft-Mobility · Seilspringen locker · Shadow-Footwork technisch · Side Plank']);
+
+  const rec = RECOVERY[dayIdx] || {items:[]};
+  const menu = MENUS[dayIdx] || [];
+  menu.forEach(x => {
+    if(x[3] === 0){
+      rows.push([x[0], 'train', x[2], 'Warm-up nicht überspringen']);
+    } else {
+      let extra = '';
+      if(x[1] === 'Frühstück') extra = 'Dazu: Kreatin 5 g + Vitamin D3';
+      else if(x[1] === 'Mittagessen') extra = 'Dazu: Omega-3';
+      rows.push([x[0], 'meal', x[1] + ' · ' + x[3] + ' kcal', x[2] + (extra ? ' — ' + extra : '')]);
+    }
+  });
+
+  (rec.items || []).forEach(x => rows.push([x[0], 'rec', x[1], x[2] || '']));
+  const val = t => { const m = String(t).match(/(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : 9999; };
+  rows.sort((a, b) => val(a[0]) - val(b[0]));
+
+  // Magnesium & Schlaf immer ans Ende, mindestens 30 Min. nach dem letzten Termin
+  const latest = rows.length ? val(rows[rows.length - 1][0]) : 20 * 60;
+  const isHard = (dayIdx === 0 || dayIdx === 2 || dayIdx === 4);
+  const bedTarget = isHard ? 21 * 60 + 45 : 22 * 60 + 15;
+  const bed = Math.max(bedTarget, latest + 45);
+  const fmt = mins => String(Math.floor(mins / 60) % 24).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0');
+  rows.push([fmt(bed - 15), 'supp', 'Magnesium 200–300 mg', 'Vor dem Schlafen']);
+  rows.push([fmt(bed), 'sleep', 'Licht aus', (isHard ? 'Harter Tag heute — Erholung zählt. ' : '') + '7.5–9 h Schlaf']);
+  return rows;
+}
+
+const ICON = { wake:'☀', move:'🤸', meal:'🍽', train:'⚡', rec:'♨', supp:'💊', sleep:'🌙' };
+
+function scheduleHtml(dayIdx, week){
+  const rows = buildDaySchedule(dayIdx, week);
+  let out = '<table class="nutri-table"><tr><th style="width:58px">Zeit</th><th>Was</th></tr>';
+  rows.forEach(r => {
+    const cls = (r[1] === 'train' || r[1] === 'rec') ? ' class="trainrow"' : '';
+    out += '<tr' + cls + '><td>' + r[0] + '</td><td>' + (ICON[r[1]] || '') + ' <b>' + r[2] + '</b>' +
+      (r[3] ? '<br><span class="exr">' + r[3] + '</span>' : '') + '</td></tr>';
+  });
+  return out + '</table>';
+}
+
 function renderTomorrow(){
   const el = document.getElementById('panel-m');
   if(!el) return;
@@ -1108,6 +1161,10 @@ function renderTomorrow(){
     '<p>' + content.title + ' — ' + content.sub + (content.time ? ' · ' + content.time : '') + '</p>' +
     '<div class="answer">Ziel ' + n.kcal + ' kcal · ' + n.label + '</div>';
   el.appendChild(head);
+
+  const sched2 = document.createElement('div'); sched2.className = 'nutri-card';
+  sched2.innerHTML = '<h3>Tagesablauf morgen</h3>' + scheduleHtml(dayIdx, week);
+  el.appendChild(sched2);
 
   // Heute Abend vorbereiten
   const prep = document.createElement('div');
