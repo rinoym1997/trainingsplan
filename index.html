@@ -195,6 +195,7 @@
 
   <div class="tabs">
     <div class="tab active" data-tab="t">Heute</div>
+    <div class="tab" data-tab="m">Morgen</div>
     <div class="tab" data-tab="a">Block A · Aufbau &amp; Fettabbau</div>
     <div class="tab" data-tab="b">Block B · Peak &amp; Schärfe</div>
     <div class="tab" data-tab="g">3. Badminton &amp; Doppel-Sessions</div>
@@ -202,6 +203,7 @@
   </div>
 
   <div class="panel active" id="panel-t"></div>
+  <div class="panel" id="panel-m"></div>
   <div class="panel" id="panel-a"><div class="loading-note">Lädt…</div></div>
   <div class="panel" id="panel-b"></div>
 
@@ -214,7 +216,10 @@
         <tr><td><b>Axelsen / DEN</b></td><td>Kurze explosive Footwork-Intervalle (8×15 Sek., Defense-Fokus), 1-gegen-1 Tempowechsel-Drills, Side Planks &amp; tiefe Lunge-Mobilität — und sein Off-Court-Fundament (8–9 h Schlaf, Shake direkt nach Training) steht schon im Plan</td></tr>
         <tr><td><b>Momota / JPN</b></td><td>Defense-Multifeed: 2–3×2 Min. Dauerverteidigung gegen Angriff — baut die Verteidigung, für die er 121 Wochen Weltranglisten-Erster war</td></tr>
         <tr><td><b>Zheng Siwei</b></td><td>Doppel-Speed am Samstag: schnelle Drives-Wechsel, Reaktions-Netzkills, Täuschungen — armschnell, beinschonend</td></tr>
-        <tr><td><b>Kraftraum</b></td><td>Iso-Lunge-Holds (tiefe Badminton-Position), Kontrast-Sprünge nach schweren Kniebeugen-Sätzen (PAP), Rotationspower-Block am Dienstag: Medball-Rotationswürfe + Woodchops — die Hüfte-Rumpf-Kette hinter dem Smash</td></tr>
+        <tr><td><b>Kraftraum</b></td><td>Iso-Lunge-Holds (tiefe Badminton-Position), Kontrast-Sprünge nach schweren Kniebeugen-Sätzen (PAP)</td></tr>
+        <tr><td><b>Effizienz-Prinzip</b></td><td><b>Ein Reiz pro Qualität</b> — bei Redundanz gewinnt die badmintonspezifischere Variante. Gestrichen: Box Jumps &amp; Broad Jumps (CMJ deckt Explosivität + Landung ab), Complex-Finisher (viel Ermüdung, wenig Transfer), Woodchops (Kabel-Chop im Ausfallschritt ist spezifischer), Schulterdrücken (Schulterlast beim Badminton ist ohnehin hoch), Wadenheben (Seilspringen 4×/Woche reicht). Ergebnis: Gym 40–55 Min statt 85.</td></tr>
+        <tr><td><b>Was bleibt &amp; warum</b></td><td><b>CMJ</b> = Split-Step-Muster (Dehnungs-Verkürzungs-Zyklus) · <b>Kniebeuge + PAP-Kontrast</b> = schwere Kraft direkt in Explosivität übersetzt · <b>RDL/Hip Thrust</b> = Hüftkette, der Motor jeder Rotation · <b>Split Squat + Iso-Lunge</b> = einbeinige Kontrolle in der Spielposition · <b>Slam-Ball-Würfe + Kabel-Chop im Lunge</b> = Rotationspower aus der Hüfte · <b>Deep Activation</b> vor jeder Session = Gesäss &amp; Tiefenrumpf an, bevor Last kommt</td></tr>
+        
       </table>
       <p class="tipline">⚠ Ehrlichkeit zuerst: Profis trainieren 2×/Tag, 6 Tage/Woche, seit dem Kindesalter — wir übernehmen ihre <b>Methoden</b>, nicht ihr <b>Volumen</b>. Im Kaloriendefizit wäre eine Volumen-Kopie der schnellste Weg in Verletzung und Stagnation.</p>
     </div>
@@ -399,6 +404,7 @@ window.storage = {
 };
 </script>
 <script>
+
 const WEEKS = [
  {n:1, range:'20.–26. Juli', block:'A', phase:'reaktivierung', phaseLabel:'Reaktivierung', start:'2026-07-20'},
  {n:2, range:'27. Jul–2. Aug', block:'A', phase:'reaktivierung', phaseLabel:'Reaktivierung', start:'2026-07-27'},
@@ -415,207 +421,230 @@ const DAYNAMES = ['Mo','Di','Mi','Do','Fr','Sa','So'];
 
 const TEMPLATES = {
   reaktivierung: {
-    note: 'RPE 6–7. Der Körper braucht nach Ferien/Ausfällen Zeit, sich wieder an die Reize zu gewöhnen. Mo = schwerer Beintag, Di = reiner Oberkörper — so liegen 48h zwischen Beintraining und Badminton.',
+    note: 'RPE 6–7. Wiedereinstieg: Technik vor Gewicht. Prinzip überall: ein Reiz pro Qualität, die badmintonspezifischste Variante gewinnt. Gym ~50 Min, nicht länger.',
     days: [
-      {type:'gym', title:'Gym A', sub:'Beine + Plyo, Ganzkörper', time:'65 Min', exercises:[
-        {n:'Warm-up: Seilspringen', p:'5 Min · 2 Min normal, 2 Min lateral, 1 Min High Knees', r:'—'},
-        {n:'Landungs-/Pogo-Sprünge', p:'3×6 · zuerst, frisch — leise & symmetrisch landen', r:'60 Sek.'},
+      {type:'gym', title:'Gym A', sub:'Beine · Kraft + Explosivität', time:'50 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min · Glute Bridge 15 · Clamshells 12/Seite · Weltgrösste Dehnung + tiefe Hocke 3×20 Sek.', r:'—'},
+        {n:'CMJ (Countermovement Jumps)', p:'3×5 · tief absenken, sofort maximal hoch — Split-Step-Muster', r:'75 Sek.'},
         {n:'Kniebeugen', p:'3×8 · RPE 6–7 (Ref. 55–60 kg)', r:'90 Sek.'},
-        {n:'Hip Thrust', p:'3×10 · RPE 6–7', r:'75 Sek.'},
-        {n:'Split Squat', p:'3×8/Bein · leicht', r:'60 Sek.'},
-        {n:'Iso-Lunge-Hold (tiefe Badminton-Ausfallschritt-Position)', p:'2×20 Sek./Bein · Rumpf aufrecht', r:'30 Sek.'},
-        {n:'Beinbeuger liegend', p:'3×10 · leicht', r:'60 Sek.'},
-        {n:'Wadenheben', p:'2×15 · leicht', r:'45 Sek.'},
+        {n:'RDL oder Hip Thrust', p:'3×10 · RPE 6–7 — Hüftkette', r:'75 Sek.'},
+        {n:'Split Squat', p:'3×8/Bein · leicht — einbeinige Kontrolle', r:'60 Sek.'},
+        {n:'Finisher: Iso-Lunge-Hold', p:'2×20 Sek./Bein in tiefer Badminton-Lunge', r:'30 Sek.'},
+        {n:'Cool-down', p:'4 Min dehnen: Hüftbeuger, Quads, Hamstrings, Waden', r:'—'},
       ]},
-      {type:'gym', title:'Gym B', sub:'Nur Oberkörper + Core', time:'50 Min', exercises:[
-        {n:'Warm-up: Seilspringen', p:'3–4 Min locker', r:'—'},
-        {n:'Kabel-Woodchops (hoch→tief)', p:'3×10/Seite · kontrolliert, Hüfte dreht mit', r:'45 Sek.'},
+      {type:'gym', title:'Gym B', sub:'Oberkörper + Rotation', time:'45 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 3 Min · Theraband-Aussenrotation 15/Seite · Band Pull-aparts 15 · T-Spine-Rotation', r:'—'},
+        {n:'Theraband-Rotationen (stehend)', p:'3×12/Seite · langsam, Hüfte führt — Muster lernen', r:'40 Sek.'},
+        {n:'Lunge mit Rotation (Körpergewicht)', p:'3×8/Seite · Rotation aus der Ausfallschritt-Position', r:'45 Sek.'},
         {n:'Bankdrücken / Liegestütze', p:'3×10 · leicht-moderat', r:'75 Sek.'},
         {n:'Rudern', p:'3×10 · moderat', r:'75 Sek.'},
-        {n:'Schulterdrücken', p:'3×10 · leicht', r:'60 Sek.'},
         {n:'Lat Pulldown / Klimmzüge', p:'3×10 · RPE 6–7', r:'75 Sek.'},
-        {n:'Core-Zirkel', p:'2 Runden (Plank 40 Sek., Pallof 10/Seite)', r:'30 Sek.'},
+        {n:'Core: Pallof + Side Plank', p:'2 Runden: Pallof 10/Seite, Side Plank 25 Sek./Seite', r:'30 Sek.'},
+        {n:'Cool-down', p:'3 Min dehnen: Brust, Lat, Schultern', r:'—'},
       ]},
       {type:'bad', title:'Badminton', sub:'Technik + Multi-Shuttle', time:'60–75 Min', blocks:[
-        {n:'Einschlagen', p:'10 Min.'},
-        {n:'6-Ecken-Shadow (CHN-System)', p:'6×30 Sek., zügig, mit Split-Step · Pause 30 Sek.'},
+        {n:'Warm-up', p:'Seilspringen 3 Min · Hüft-Mobility 2 Min · Einschlagen 10 Min'},
+        {n:'6-Ecken-Shadow (CHN)', p:'6×30 Sek., zügig, mit Split-Step · Pause 30 Sek.'},
         {n:'Multi-Shuttle Smash+Kill', p:'4×10 · Pause 60 Sek.'},
         {n:'Technik Drops/Clears', p:'15 Min.'},
-        {n:'Cool-down & Stretching', p:'10 Min.'},
+        {n:'Cool-down', p:'5 Min locker + Dehnen'},
       ]},
-      {type:'cardio', title:'Zone 2', sub:'Locker, Grundlage', time:'40 Min', detail:'Joggen oder Bike bei ca. 65–70% HFmax, durchgehend. Hält dich frisch für Freitag.'},
+      {type:'cardio', title:'Zone 2', sub:'Locker, Grundlage', time:'40 Min', detail:'Joggen oder Bike bei ca. 65–70% HFmax, durchgehend. Danach 5 Min Hüft-Mobility.'},
       {type:'bad', title:'Badminton', sub:'Matchplay, moderat', time:'60–80 Min', blocks:[
-        {n:'Warm-up', p:'10 Min.'},
+        {n:'Warm-up', p:'Mobilisieren 3 Min · Seilspringen 2 Min · Einschlagen 8 Min'},
         {n:'Matchplay moderat', p:'30–40 Min.'},
-        {n:'Cool-down', p:'10 Min.'},
+        {n:'Cool-down', p:'5–10 Min locker + Dehnen'},
       ]},
-      {type:'bad3', title:'3. Badminton', sub:'Technik, leicht', time:'45 Min', detail:'Fokus auf einen konkreten schwachen Punkt (z.B. Netzspiel, Rückhand). Nach dem Freitag bewusst locker — kein Matchplay-Druck.'},
+      {type:'bad3', title:'3. Badminton', sub:'Technik, leicht', time:'45 Min', detail:'Kurzes Warm-up, dann Fokus auf einen schwachen Punkt (Netzspiel, Rückhand). Nach dem Freitag bewusst locker.'},
       {type:'rest', title:'Ruhetag', sub:'Aktive Erholung', time:'', detail:'Spaziergang 20–30 Min, Mobility 10 Min.'},
     ],
-    hiitSat: {title:'Bike, locker', sub:'Regeneration+', time:'~25–30 Min', detail:'Ganz lockeres Tempo, optional 4×1 Min. leicht zügig. Kein harter Reiz nach dem Freitag.'}
+    hiitSat: {title:'Bike, locker', sub:'Regeneration+', time:'~25–30 Min', detail:'Ganz lockeres Tempo, optional 4×1 Min. leicht zügig.'}
   },
   aufbau: {
-    note: 'RPE 7–8. Belastung steigt sichtbar. Die 3 relevanten Reize der Woche: Mo Gym (hart), Mi Badminton (mittel-hart), Fr Matchplay (hart) — Samstag bleibt leicht.',
+    note: 'RPE 7–8. Gym bleibt bei ~55 Min — Qualität statt Volumen. Die 3 relevanten Reize: Mo Gym, Mi Badminton, Fr Matchplay.',
     days: [
-      {type:'gym', title:'Gym A', sub:'Beine schwer + Plyo', time:'75 Min', exercises:[
-        {n:'Warm-up: Seilspringen', p:'5 Min · lateral + High Knees + Double-Under-Versuche', r:'—'},
-        {n:'Box Jumps', p:'3×6 @ ~50 cm · zuerst, frisch — Landung leise/stabil/symmetrisch', r:'90 Sek.'},
+      {type:'gym', title:'Gym A', sub:'Beine · Kraft + Explosivität', time:'55 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min · Glute Bridge 15 · Clamshells 12/Seite · Mobility 3 Min · 2 Aufwärmsätze Kniebeugen', r:'—'},
+        {n:'CMJ (Countermovement Jumps)', p:'4×5 · maximal explosiv, volle Erholung', r:'90 Sek.'},
         {n:'Kniebeugen', p:'4×6 · RPE 7–8 (Ref. 65–70 kg)', r:'2 Min.'},
-        {n:'RDL', p:'3×8 · RPE 7', r:'90 Sek.'},
+        {n:'RDL', p:'3×8 · RPE 7 — Hüftkette & Hamstrings', r:'90 Sek.'},
         {n:'Split Squat', p:'3×10/Bein · moderat', r:'60 Sek.'},
-        {n:'Iso-Lunge-Hold (tiefe Badminton-Lunge)', p:'3×20–30 Sek./Bein', r:'45 Sek.'},
         {n:'Nordic Curl / Leg Curl', p:'3×8 · kontrolliert', r:'75 Sek.'},
-        {n:'Adduktoren / Copenhagen', p:'3×20–30 Sek./Seite', r:'45 Sek.'},
-        {n:'Wadenheben', p:'3×15 · moderat', r:'45 Sek.'},
+        {n:'Finisher: Iso-Lunge + Copenhagen', p:'3× (20–30 Sek. Iso-Lunge/Bein + 20 Sek. Copenhagen/Seite)', r:'45 Sek.'},
+        {n:'Cool-down', p:'4 Min dehnen', r:'—'},
       ]},
-      {type:'gym', title:'Gym B', sub:'Nur Oberkörper + Core', time:'60 Min', exercises:[
-        {n:'Warm-up: Seilspringen', p:'3–4 Min locker', r:'—'},
-        {n:'Medball-Rotationswürfe (an die Wand)', p:'4×5/Seite · max. explosiv — Kraft aus Hüfte & Rumpf, Arm nur Übermittler', r:'75 Sek.'},
-        {n:'Kabel-Woodchops (tief→hoch)', p:'3×10/Seite · zügig-kontrolliert', r:'45 Sek.'},
+      {type:'gym', title:'Gym B', sub:'Oberkörper + Rotationspower', time:'55 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 3 Min · Theraband-Aussenrotation 15/Seite · Y-T-W 8 je · 1 Aufwärmsatz Bank', r:'—'},
+        {n:'Slam-Ball-Rotationswürfe (Wand)', p:'4×5/Seite · frisch, max. explosiv — Hüfte initiiert, Arm liefert ab', r:'75 Sek.'},
+        {n:'Overhead-Slams', p:'3×6 · voller Zug von oben — Smash-Abwärtskette', r:'60 Sek.'},
         {n:'Bankdrücken', p:'4×8 · RPE 7–8', r:'2 Min.'},
         {n:'Rudern', p:'4×10 · moderat-schwer', r:'75 Sek.'},
-        {n:'Schulterdrücken', p:'3×10 · moderat', r:'60 Sek.'},
         {n:'Klimmzüge / Lat Pulldown', p:'4×8 · RPE 7–8', r:'90 Sek.'},
-        {n:'Core-Zirkel', p:'3 Runden: Plank, Side Plank (Axelsen), Pallof', r:'30 Sek.'},
+        {n:'Kabel-Chop im Ausfallschritt', p:'3×10/Seite · tief→hoch, Standbein stabil', r:'45 Sek.'},
+        {n:'Core: Pallof + Side Plank', p:'2 Runden', r:'30 Sek.'},
+        {n:'Cool-down', p:'3 Min dehnen', r:'—'},
       ]},
       {type:'bad', title:'Badminton', sub:'Footwork + Multi-Shuttle', time:'75 Min', blocks:[
-        {n:'Footwork-Intervalle (Axelsen-Stil)', p:'8×15 Sek. mit Defense-Fokus · Pause 45 Sek.'},
+        {n:'Warm-up', p:'Seilspringen 3 Min · Mobility 2 Min · Einschlagen 5 Min'},
+        {n:'Footwork-Intervalle (Axelsen)', p:'8×15 Sek. Defense-Fokus · Pause 45 Sek.'},
         {n:'Multi-Shuttle Smash+Kill (CHN)', p:'5×12 · Pause 45–60 Sek.'},
         {n:'Netzangriff', p:'5×10 · Pause 45 Sek.'},
-        {n:'1-gegen-1 Tempowechsel', p:'4×45 Sek. — Rhythmus bewusst brechen (Partner; sonst Multi-Feed)'},
-        {n:'Matchplay', p:'20 Min.'},
+        {n:'1-gegen-1 Tempowechsel', p:'4×45 Sek. — Rhythmus brechen'},
+        {n:'Matchplay', p:'15 Min.'},
+        {n:'Cool-down', p:'5 Min locker + Dehnen'},
       ]},
-      {type:'cardio', title:'Zone 2 +', sub:'Mit Tempowechseln', time:'45–50 Min', detail:'Grundtempo locker, 3–4× 30–45 Sek. Tempowechsel, dazwischen lockeres Tempo.'},
-      {type:'bad', title:'Badminton', sub:'Matchplay intensiv', time:'80–90 Min', blocks:[
-        {n:'Defense-Multifeed (Momota-Stil)', p:'3×2 Min. Dauerverteidigung gegen Angriff · Pause 90 Sek.'},
+      {type:'cardio', title:'Zone 2 +', sub:'Mit Tempowechseln', time:'45–50 Min', detail:'Grundtempo locker, 3–4× 30–45 Sek. Tempowechsel. Danach 5 Min Hüft-Mobility.'},
+      {type:'bad', title:'Badminton', sub:'Matchplay intensiv', time:'85–90 Min', blocks:[
+        {n:'Warm-up', p:'Mobilisieren 3 Min · Seilspringen 2 Min · Einschlagen 8 Min'},
+        {n:'Defense-Multifeed (Momota)', p:'3×2 Min. Dauerverteidigung · Pause 90 Sek.'},
         {n:'Matchplay, echtes Tempo', p:'40 Min.'},
-        {n:'Situationstraining', p:'15 Min. (Rückstand aufholen, enge Sätze)'},
+        {n:'Situationstraining', p:'15 Min.'},
+        {n:'Cool-down', p:'5–10 Min locker + Dehnen'},
       ]},
-      {type:'bad3', title:'3. Badminton', sub:'Technik & leichtes Doppel', time:'60 Min', detail:'Netzspiel, Aufschlag, Timing, lockeres Doppel. Ideen: schnelle Flachball-Wechsel (Drives) 4×1 Min., Reaktions-Netzkills, Täuschungen — Doppel-Tempo à la Zheng Siwei: armschnell, beinschonend. Kein hartes Matchplay.'},
+      {type:'bad3', title:'3. Badminton', sub:'Technik & leichtes Doppel', time:'60 Min', detail:'Netzspiel, Aufschlag, Timing, Drives-Wechsel 4×1 Min., Reaktions-Netzkills (Zheng-Siwei-Tempo, armschnell). Kein hartes Matchplay.'},
       {type:'rest', title:'Ruhetag', sub:'Frei nach Bedarf', time:'', detail:'Mobility + Spaziergang, oder ganz frei.'},
     ],
     hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~30 Min', detail:'Lockeres Tempo, optional 5×1 Min. leicht zügig / 2 Min. locker.'}
   },
   deload: {
-    note: 'Bewusst leichte Woche — kein Rückschritt, sondern Vorbereitung auf den nächsten harten Block. RPE 5–6, ~50–60% Volumen, kein Plyo diese Woche.',
+    note: 'Bewusst leichte Woche. RPE 5–6, ~50–60% Volumen, kein Plyo, keine Würfe.',
     days: [
       {type:'gym', title:'Gym A', sub:'Reduziert', time:'35 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 3 Min locker · Glute Bridge 15 · Mobility 3 Min', r:'—'},
         {n:'Kniebeugen', p:'2×8 · RPE 5–6', r:'90 Sek.'},
-        {n:'Hip Thrust', p:'2×10 · leicht', r:'60 Sek.'},
+        {n:'RDL oder Hip Thrust', p:'2×10 · leicht', r:'60 Sek.'},
+        {n:'Cool-down', p:'4 Min dehnen', r:'—'},
       ]},
       {type:'gym', title:'Gym B', sub:'Kurz, Mobility-Fokus', time:'30 Min', exercises:[
+        {n:'Warm-up', p:'Seilspringen 2 Min · Band Pull-aparts 15', r:'—'},
         {n:'Bankdrücken', p:'2×8 · leicht', r:'90 Sek.'},
-        {n:'Mobility/Prehab (Hüfte, Knie, Schulter)', p:'15 Min.', r:'—'},
+        {n:'Rudern', p:'2×10 · leicht', r:'60 Sek.'},
+        {n:'Mobility/Prehab (Hüfte, Knie, Schulter)', p:'12 Min.', r:'—'},
       ]},
-      {type:'bad', title:'Badminton', sub:'Nur Technik', time:'45 Min', detail:'Kein hartes Matchplay — Fokus auf sauberer Ausführung.'},
+      {type:'bad', title:'Badminton', sub:'Nur Technik', time:'45 Min', detail:'Lockeres Warm-up, dann Technik — kein hartes Matchplay.'},
       {type:'cardio', title:'Zone 2', sub:'Ganz locker oder frei', time:'30 Min', detail:'Optional auslassen.'},
-      {type:'bad', title:'Badminton', sub:'Leicht', time:'45 Min', detail:'Fokus auf Spielfreude statt Leistung.'},
+      {type:'bad', title:'Badminton', sub:'Leicht', time:'45 Min', detail:'Spielfreude statt Leistung.'},
       {type:'bad3', title:'3. Badminton', sub:'Optional aussetzen', time:'30 Min', detail:'Ganz leicht oder ausfallen lassen.'},
       {type:'rest', title:'Ruhetag', sub:'Komplett frei', time:'', detail:'Kein Programm.'},
     ],
     hiitSat: {title:'Bike', sub:'Deload', time:'~20 Min', detail:'Ganz locker, oder komplett auslassen.'}
   },
   peak: {
-    note: 'Maximal 3 relevante Reize: Mo Gym A (hart), Mi Badminton (mittel-hart), Fr Matchplay (hart). Alles andere — inkl. Samstag — bewusst leicht.',
+    note: '3 relevante Reize: Mo Gym A (hart), Mi Badminton, Fr Matchplay. Gym bleibt kurz — die Intensität steigt, nicht die Dauer.',
     days: [
-      {type:'gym', title:'Gym A', sub:'Hart — Reiz 1/3', time:'70 Min', exercises:[
-        {n:'Warm-up: Seilspringen', p:'5 Min · inkl. Double-Unders', r:'—'},
-        {n:'Box Jumps', p:'3×6 · Höhe halten — nur Landequalität zählt', r:'90 Sek.'},
-        {n:'Kniebeugen', p:'4×5 · RPE 8, kein Versagen (Ref. 72–77 kg)', r:'2–2.5 Min.'},
-        {n:'Kontrast-Sprünge (PAP)', p:'direkt nach jedem Kniebeugen-Satz: 3 max. explosive Sprünge', r:'—'},
+      {type:'gym', title:'Gym A', sub:'Hart — Reiz 1/3', time:'55 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min · Glute Bridge 15 · Clamshells 12/Seite · 2 Aufwärmsätze', r:'—'},
+        {n:'CMJ (Countermovement Jumps)', p:'3×4 · maximal, volle Erholung', r:'90 Sek.'},
+        {n:'Kniebeugen + Kontrast (PAP)', p:'4×5 · RPE 8, kein Versagen (Ref. 72–77 kg) — nach jedem Satz 3 max. Sprünge', r:'2–2.5 Min.'},
         {n:'RDL', p:'3×6 · RPE 7–8', r:'2 Min.'},
         {n:'Split Squat', p:'3×8/Bein · moderat-schwer', r:'75 Sek.'},
+        {n:'Cool-down', p:'4 Min dehnen', r:'—'},
       ]},
-      {type:'gym', title:'Gym B', sub:'Oberkörper moderat', time:'50 Min', exercises:[
-        {n:'Warm-up: Seilspringen', p:'3 Min locker', r:'—'},
-        {n:'Medball-Rotationswürfe', p:'4×4/Seite · max. explosiv, volle Erholung', r:'90 Sek.'},
+      {type:'gym', title:'Gym B', sub:'Oberkörper + Rotationspower', time:'50 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 3 Min · Theraband-Aussenrotation 15/Seite · Y-T-W', r:'—'},
+        {n:'Slam-Ball-Rotationswürfe', p:'4×4/Seite · frisch, max. explosiv', r:'90 Sek.'},
+        {n:'Overhead-Slams', p:'3×5 · maximal', r:'75 Sek.'},
         {n:'Bankdrücken', p:'3×6 · RPE 7', r:'2 Min.'},
         {n:'Rudern', p:'3×10 · moderat', r:'75 Sek.'},
         {n:'Klimmzüge / Lat Pulldown', p:'3×8 · RPE 7', r:'90 Sek.'},
-        {n:'Core-Zirkel', p:'2 Runden', r:'30 Sek.'},
+        {n:'Cool-down', p:'3 Min dehnen', r:'—'},
       ]},
       {type:'bad', title:'Badminton', sub:'Multi-Shuttle — Reiz 2/3', time:'75 Min', blocks:[
+        {n:'Warm-up', p:'Seilspringen 3 Min · Mobility 2 Min · Einschlagen 5 Min'},
         {n:'Shadow-Footwork', p:'6×25 Sek. explosiv · volle Pausen'},
         {n:'Multi-Shuttle', p:'5×12 zügig · Pause 45 Sek.'},
         {n:'Defense-Multifeed (Momota)', p:'2×2 Min. Dauerverteidigung'},
         {n:'Matchplay moderat', p:'20 Min.'},
+        {n:'Cool-down', p:'5 Min locker + Dehnen'},
       ]},
       {type:'cardio', title:'Zone 2, locker', sub:'', time:'40 Min', detail:'Nur lockeres Tempo — hält dich frisch für Freitag.'},
       {type:'bad', title:'Badminton', sub:'Matchplay hart — Reiz 3/3', time:'90 Min', blocks:[
+        {n:'Warm-up', p:'Mobilisieren 3 Min · Seilspringen 2 Min · Einschlagen 10 Min'},
         {n:'Matchplay, wettkampfnah', p:'50–60 Min.'},
+        {n:'Cool-down', p:'10 Min locker + Dehnen'},
       ]},
-      {type:'bad3', title:'3. Badminton', sub:'Leicht — Technik/Doppel', time:'45 Min', detail:'Nach dem harten Freitag ausschliesslich Technik, Timing oder lockeres Doppel. Kein viertes hartes Training.'},
+      {type:'bad3', title:'3. Badminton', sub:'Leicht — Technik/Doppel', time:'45 Min', detail:'Nach dem harten Freitag nur Technik, Timing, lockeres Doppel.'},
       {type:'rest', title:'Ruhetag', sub:'Übergang vorbereiten', time:'', detail:'Aktive Erholung, dann Start Block B.'},
     ],
     hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~25 Min', detail:'Ganz locker — reine Bewegung, kein Reiz.'}
   },
   scharfen: {
-    note: 'Volumen runter, Intensität und Frische hoch — jetzt zählt Schnelligkeit, nicht mehr Maximalkraft.',
+    note: 'Volumen runter, Schärfe hoch. Gym nur noch ~40 Min: wenige Sätze, maximale Qualität. Frische schlägt jetzt Volumen.',
     days: [
-      {type:'gym', title:'Gym A', sub:'Kurz & schwer + Plyo', time:'50 Min', exercises:[
-        {n:'Warm-up: Seilspringen', p:'4 Min · schnell & sauber, Double-Unders', r:'—'},
-        {n:'Box Jumps', p:'3×4 · Qualität — leise, stabile Landung', r:'2 Min.'},
-        {n:'Kniebeugen', p:'3×5 · RPE 7–8 (Ref. 65–70 kg)', r:'2.5 Min.'},
-        {n:'Kontrast-Sprünge (PAP)', p:'nach jedem Kniebeugen-Satz: 2 max. explosive Sprünge', r:'—'},
+      {type:'gym', title:'Gym A', sub:'Kurz & scharf', time:'40 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min (Double-Unders) · Glute Bridge 12 · Mobility · 2 Aufwärmsätze', r:'—'},
+        {n:'CMJ (Countermovement Jumps)', p:'3×3 · maximal — Qualität, kein Volumen', r:'2 Min.'},
+        {n:'Kniebeugen + Kontrast (PAP)', p:'3×5 · RPE 7–8 (Ref. 65–70 kg) — nach jedem Satz 2 max. Sprünge', r:'2.5 Min.'},
         {n:'Hip Thrust', p:'2×8 · RPE 7', r:'90 Sek.'},
+        {n:'Cool-down', p:'4 Min dehnen', r:'—'},
       ]},
-      {type:'gym', title:'Gym B', sub:'Oberkörper kurz', time:'40 Min', exercises:[
-        {n:'Warm-up: Seilspringen', p:'3 Min locker', r:'—'},
-        {n:'Medball-Rotationswürfe', p:'3×4/Seite · max. explosiv — Qualität vor Menge', r:'90 Sek.'},
+      {type:'gym', title:'Gym B', sub:'Kurz + Rotation', time:'35 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 3 Min · Theraband-Aussenrotation 15/Seite', r:'—'},
+        {n:'Slam-Ball-Rotationswürfe', p:'3×4/Seite · max. explosiv — Qualität vor Menge', r:'90 Sek.'},
         {n:'Bankdrücken', p:'3×5 · RPE 7–8', r:'2.5 Min.'},
         {n:'Rudern', p:'2×8 · moderat', r:'90 Sek.'},
-        {n:'Core-Zirkel', p:'2 Runden', r:'30 Sek.'},
+        {n:'Cool-down', p:'3 Min dehnen', r:'—'},
       ]},
       {type:'bad', title:'Badminton', sub:'Schnelligkeit & Tempo', time:'60 Min', blocks:[
+        {n:'Warm-up (gründlich!)', p:'Seilspringen 3 Min · Mobility 3 Min · Einschlagen 5 Min · 2 Steigerungsläufe'},
         {n:'Shadow-Footwork', p:'8×20 Sek. maximal explosiv · volle Pausen (60 Sek.)'},
         {n:'Multi-Shuttle-Sequenzen', p:'6×15 Sek. · Pause 45–60 Sek.'},
-        {n:'Reaktionsstarts', p:'6×10 Sek. auf Signal/Zuruf · volle Pausen'},
-        {n:'Fokus', p:'Jede Wiederholung mit maximaler Schärfe'},
+        {n:'Reaktionsstarts', p:'6×10 Sek. auf Signal · volle Pausen'},
+        {n:'Cool-down', p:'5 Min locker + Dehnen'},
       ]},
       {type:'cardio', title:'Zone 2', sub:'Kurz oder frei', time:'30 Min', detail:'Frische geht vor zusätzlichem Reiz.'},
       {type:'bad', title:'Badminton', sub:'Matchplay hart', time:'60 Min', blocks:[
-        {n:'Matchplay, volle Intensität', p:'wettkampfnah'},
+        {n:'Warm-up', p:'Mobilisieren · Seilspringen 2 Min · Einschlagen 8 Min'},
+        {n:'Matchplay, volle Intensität', p:'~40 Min. wettkampfnah'},
+        {n:'Cool-down', p:'5–10 Min locker + Dehnen'},
       ]},
-      {type:'bad3', title:'3. Badminton', sub:'Technik/Timing, leicht', time:'45 Min', detail:'Die Matchsimulation ist der Freitag — heute Technik und Timing: Drives-Wechsel 4×1 Min., Reaktions-Netzkills, Täuschungen (Zheng-Siwei-Tempo, armschnell).'},
+      {type:'bad3', title:'3. Badminton', sub:'Technik/Timing, leicht', time:'45 Min', detail:'Drives-Wechsel 4×1 Min., Reaktions-Netzkills, Täuschungen.'},
       {type:'rest', title:'Ruhetag', sub:'Vollständige Erholung', time:'', detail:'Kein Kompromiss mehr.'},
     ],
     hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~20 Min', detail:'Nur Bewegung, kein Reiz.'}
   },
   taper: {
-    note: 'Reduktion beginnt — Kraft und Schärfe erhalten, kein neues Ermüdungsrisiko mehr eingehen.',
+    note: 'Kraft und Schärfe erhalten, kein neues Ermüdungsrisiko.',
     days: [
       {type:'gym', title:'Gym A', sub:'Erhalt', time:'30 Min', exercises:[
+        {n:'Warm-up', p:'Seilspringen 3 Min · Glute Bridge 12 · Mobility 3 Min', r:'—'},
+        {n:'CMJ', p:'2×3 · locker-explosiv, nur Reiz halten', r:'90 Sek.'},
         {n:'Kniebeugen', p:'2×5 · RPE 7, Gewicht halten', r:'2 Min.'},
+        {n:'Cool-down', p:'4 Min dehnen', r:'—'},
       ]},
       {type:'gym', title:'Gym B', sub:'Erhalt + Mobility', time:'30 Min', exercises:[
+        {n:'Warm-up', p:'Seilspringen 2 Min · Theraband-Aussenrotation', r:'—'},
         {n:'Bankdrücken', p:'2×5 · moderat', r:'2 Min.'},
-        {n:'Mobility', p:'15 Min.', r:'—'},
+        {n:'Mobility', p:'12 Min.', r:'—'},
       ]},
       {type:'bad', title:'Badminton', sub:'Technik/Tempo', time:'45 Min', detail:'Locker-scharf, kein Erschöpfungstraining.'},
       {type:'cardio', title:'Frei', sub:'Ganz locker', time:'20 Min', detail:'Oder komplett auslassen.'},
-      {type:'bad', title:'Badminton', sub:'Kontrolliertes Matchplay', time:'45–50 Min', detail:'Intensiv, aber mit Gefühl für die Grenze.'},
-      {type:'bad3', title:'3. Badminton', sub:'Leicht', time:'40 Min', detail:'Technik/Timing — kein zusätzliches Ermüdungsrisiko.'},
+      {type:'bad', title:'Badminton', sub:'Kontrolliertes Matchplay', time:'45–50 Min', detail:'Warm-up gründlich, intensiv aber mit Gefühl für die Grenze.'},
+      {type:'bad3', title:'3. Badminton', sub:'Leicht', time:'40 Min', detail:'Technik/Timing.'},
       {type:'rest', title:'Ruhetag', sub:'Komplett frei', time:'', detail:'Kein Programm.'},
     ],
     hiitSat: {title:'Bike', sub:'Reduziert', time:'~15–20 Min', detail:'Ganz locker, nur Auffrischung.'}
   },
   event: {
-    note: 'Letzte Woche vor dem 27.9. — an deinen realen Badminton-Tagen (Mi/Fr) ausgerichtet. Frische schlägt jetzt jedes zusätzliche Training.',
+    note: 'Letzte Woche — an deinen Badminton-Tagen (Mi/Fr) ausgerichtet. Frische schlägt jetzt jedes Training.',
     days: [
-      {type:'gym', title:'Gym-Aktivierung', sub:'Kurz, RPE 5–6', time:'25–35 Min', exercises:[
+      {type:'gym', title:'Gym-Aktivierung', sub:'Kurz, RPE 5–6', time:'25 Min', exercises:[
+        {n:'Warm-up', p:'Seilspringen 3 Min locker · Mobility 3 Min', r:'—'},
+        {n:'CMJ', p:'2×3 · locker, nur Timing', r:'90 Sek.'},
         {n:'Kniebeugen', p:'2×5 · leicht', r:'90 Sek.'},
-        {n:'Bankdrücken', p:'2×5 · leicht', r:'90 Sek.'},
-        {n:'Mobility', p:'10 Min.', r:'—'},
+        {n:'Mobility', p:'8 Min.', r:'—'},
       ]},
       {type:'rest', title:'Frei', sub:'Oder Mobility', time:'', detail:'Vollständige Erholung.'},
       {type:'bad', title:'Badminton', sub:'Schnell & sauber', time:'35–45 Min', blocks:[
+        {n:'Warm-up', p:'Gründlich — genau wie am Event-Tag üben'},
         {n:'Kurze scharfe Sequenzen', p:'wenig Volumen, volle Pausen'},
         {n:'Regel', p:'Nichts Neues ausprobieren'},
+        {n:'Cool-down', p:'5 Min locker'},
       ]},
       {type:'rest', title:'Frei', sub:'', time:'', detail:'Ernährung, Schlaf, Kopf freimachen.'},
-      {type:'bad3', title:'Leichtes Timing', sub:'Einschlagen', time:'20–30 Min', detail:'Nur Timing und Gefühl — keine Belastung mehr aufbauen.'},
-      {type:'rest', title:'Komplett frei', sub:'Vorbereitung', time:'', detail:'Früh schlafen, Tasche packen.'},
-      {type:'event', title:'27. September', sub:'Der Tag', time:'', detail:'Hier zeigt sich, was die letzten 10 Wochen aufgebaut haben.'},
+      {type:'bad3', title:'Leichtes Timing', sub:'Einschlagen', time:'20–30 Min', detail:'Nur Timing und Gefühl.'},
+      {type:'rest', title:'Komplett frei', sub:'Vorbereitung', time:'', detail:'Früh schlafen, Warm-up-Ablauf mental durchgehen.'},
+      {type:'event', title:'27. September', sub:'Der Tag', time:'', detail:'Warm-up wie geübt: Mobilisieren, Seilspringen, Einschlagen, 2 Steigerungen.'},
     ]
   },
 };
@@ -1026,8 +1055,104 @@ function renderToday(){
   el.appendChild(rc);
 }
 
+function findDayByDate(d){
+  for(const w of WEEKS){
+    const start = new Date(w.start + 'T00:00:00');
+    const diff = Math.floor((d - start) / 86400000);
+    if(diff >= 0 && diff < 7) return {week:w, dayIdx:diff};
+  }
+  return null;
+}
+
+// Vorbereitungs-Hinweise je Wochentag (Index 0 = Mo)
+const PREP = [
+ ['Trainingstasche', 'Gym-Sachen + Seil bereitlegen'],
+ ['Trainingstasche', 'Gym-Sachen + Seil bereitlegen'],
+ ['Schläger & Court', 'Court-Buchung prüfen · Shuttles · Pre-Snack (Banane + Reiswaffeln) einpacken'],
+ ['Sauna-Tasche', 'Handtuch, Badehose, Duschzeug · Elektrolyte für danach'],
+ ['Schläger & Court', 'Court-Buchung prüfen · Pre-Snack einpacken · Post-Box aus dem Kühlschrank holen (bei Tiefkühlung: heute Abend auftauen!)'],
+ ['Vormittags-Training', 'Sachen für ~10:00 bereitlegen — Sa ist der einzige Vormittags-Tag'],
+ ['Meal Prep', 'Einkauf erledigt? Boxen &amp; Gläser bereit · 17:00 Prep einplanen'],
+];
+
+function renderTomorrow(){
+  const el = document.getElementById('panel-m');
+  if(!el) return;
+  el.innerHTML = '';
+  const now = new Date();
+  const tmr = new Date(now.getTime() + 86400000);
+  const t = findDayByDate(tmr);
+
+  if(!t){
+    const planStart = new Date('2026-07-20T00:00:00');
+    el.innerHTML = tmr < planStart
+      ? '<div class="guide-hero"><h2>Plan startet am Montag, 20. Juli</h2><p>Ab dann zeigt dieser Tab jeden Abend, was dich morgen erwartet und was du heute noch vorbereiten solltest.</p></div>'
+      : '<div class="guide-hero"><h2>Nach dem 27.9.</h2><p>Plan abgeschlossen.</p></div>';
+    return;
+  }
+
+  const {week, dayIdx} = t;
+  const tpl = TEMPLATES[week.phase];
+  const dkey = toISO(tmr);
+  const isSat = dayIdx === 5 && !!tpl.hiitSat;
+  const mode = isSat ? (satToggles[dkey] || 'bad3') : null;
+  const content = (isSat && mode === 'hiit') ? tpl.hiitSat : tpl.days[dayIdx];
+  const n = NUTRITION[dayIdx];
+  const m = MENUS[dayIdx];
+  const rec = RECOVERY[dayIdx] || {items:[]};
+
+  // Kopf
+  const head = document.createElement('div');
+  head.className = 'guide-hero';
+  head.innerHTML = '<h2>Morgen: ' + DAYNAMES[dayIdx] + ', ' + fmtDate(tmr) + ' · Woche ' + week.n + '</h2>' +
+    '<p>' + content.title + ' — ' + content.sub + (content.time ? ' · ' + content.time : '') + '</p>' +
+    '<div class="answer">Ziel ' + n.kcal + ' kcal · ' + n.label + '</div>';
+  el.appendChild(head);
+
+  // Heute Abend vorbereiten
+  const prep = document.createElement('div');
+  prep.className = 'nutri-card';
+  const trainRow = m.find(x => x[3] === 0);
+  const firstMeal = m.find(x => x[3] > 0);
+  let prows = '<tr><th style="width:130px">Was</th><th>Details</th></tr>';
+  prows += '<tr><td><b>' + PREP[dayIdx][0] + '</b></td><td>' + PREP[dayIdx][1] + '</td></tr>';
+  if(trainRow) prows += '<tr class="trainrow"><td>Training</td><td>' + trainRow[0] + ' — ' + trainRow[2] + '</td></tr>';
+  if(firstMeal) prows += '<tr><td><b>Erste Mahlzeit</b></td><td>' + firstMeal[0] + ' · ' + firstMeal[2] + '</td></tr>';
+  (rec.items || []).forEach(x => { prows += '<tr class="trainrow"><td>' + x[1] + '</td><td>' + x[0] + (x[2] ? ' — ' + x[2] : '') + '</td></tr>'; });
+  prows += '<tr><td><b>Supplements</b></td><td>Kreatin + D3 zum Frühstück · Omega-3 mittags · Magnesium abends</td></tr>';
+  prep.innerHTML = '<h3>Heute Abend vorbereiten</h3><table class="nutri-table">' + prows + '</table>' +
+    (rec.warn ? '<p class="tipline">⚠ ' + rec.warn + '</p>' : '');
+  el.appendChild(prep);
+
+  // Trainingsdetails
+  const lbl = document.createElement('div'); lbl.className = 'weeklabel'; lbl.textContent = 'Morgiges Training im Detail';
+  el.appendChild(lbl);
+  const wrap = document.createElement('div'); wrap.className = 'today-daywrap';
+  const card = renderDayCard(week.phase, week.start, dayIdx);
+  card.classList.add('open');
+  wrap.appendChild(card);
+  el.appendChild(wrap);
+
+  // Essensplan morgen
+  const mc = document.createElement('div'); mc.className = 'nutri-card';
+  mc.innerHTML = '<h3>Essensplan morgen</h3>' + menuTableHtml(m);
+  el.appendChild(mc);
+
+  // Schlaf-Hinweis
+  const sleep = document.createElement('div'); sleep.className = 'footer';
+  const isHard = (dayIdx === 0 || dayIdx === 2 || dayIdx === 4);
+  sleep.innerHTML = '<h3>Heute Abend</h3><div class="chips">' +
+    '<div class="chip">' + (isHard ? '<b>Harter Tag morgen</b> — heute früh ins Bett (Axelsen-Regel: 21–22 Uhr)' : 'Ruhiger Tag morgen — normaler Rhythmus reicht') + '</div>' +
+    '<div class="chip">7.5–9 h Schlaf</div>' +
+    '<div class="chip">Kein Alkohol</div>' +
+    (dayIdx === 6 ? '<div class="chip"><b>Morgen:</b> Einkauf + Meal Prep</div>' : '') +
+    '</div>';
+  el.appendChild(sleep);
+}
+
 function renderAll(){
   renderToday();
+  renderTomorrow();
   renderBlock('A','panel-a');
   renderBlock('B','panel-b');
   renderWeekMenus();
