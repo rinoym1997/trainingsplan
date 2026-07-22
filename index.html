@@ -166,6 +166,17 @@
   .sc-actions{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;}
   .sc-btn{font-family:'Oswald',sans-serif; font-size:12px; padding:7px 12px; border-radius:8px; border:1.5px solid var(--line); background:var(--bg-card); cursor:pointer; color:var(--ink-soft);}
   .sc-btn.primary{background:var(--court); color:#fff; border-color:var(--court);}
+  .sc-shift{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:12px 0 4px; padding:10px 12px; background:var(--rest-bg); border-radius:10px;}
+  .sc-shift label{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint);}
+  .sc-shift input[type=time]{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 7px; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--ink);}
+  .sched-item.done .sc-title{text-decoration:line-through; opacity:.55;}
+  .sc-check{background:transparent; border:1.5px solid rgba(0,0,0,.2); border-radius:50%; width:18px; height:18px; font-size:10px; line-height:1; cursor:pointer; flex-shrink:0; color:var(--ink-soft); padding:0; margin-top:2px;}
+  .sched-item.done .sc-check{background:var(--teal); border-color:var(--teal); color:#fff;}
+  .sched-item.train .sc-check, .sched-item.rec .sc-check{border-color:rgba(255,255,255,.4); color:#fff;}
+  .sc-now{border-left:3px solid var(--coral) !important;}
+  .sc-summary{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;}
+  .sc-pill{font-family:'IBM Plex Mono',monospace; font-size:10.5px; background:var(--rest-bg); border-radius:999px; padding:5px 11px; color:var(--ink-soft);}
+  .sc-pill b{color:var(--ink);}
   .today-daywrap{margin-bottom:6px;}
   .today-daywrap .day{cursor:default;}
   .day.open{grid-column:1 / -1;}
@@ -1020,9 +1031,9 @@ function renderToday(){
   sched.innerHTML = '<h3>Tagesplan heute</h3>';
   const schedBox = document.createElement('div');
   sched.appendChild(schedBox);
-  renderSchedule(schedBox, dayIdx, week, toISO(now));
+  renderSchedule(schedBox, dayIdx, week, toISO(now), true);
   const tip = document.createElement('p'); tip.className = 'tipline';
-  tip.textContent = 'Zeiten und Titel sind direkt editierbar, Blöcke per ⠿ verschiebbar. Änderungen werden gespeichert.';
+  tip.textContent = 'Zeiten & Titel direkt editierbar · ⠿ zum Verschieben · ○ zum Abhaken · roter Balken = als Nächstes dran. Trainingszeit ändern verschiebt alle Folgetermine mit.';
   sched.appendChild(tip);
   el.appendChild(sched);
 
@@ -1159,23 +1170,67 @@ function getSchedule(dayIdx, week, dateKey){
   return buildDaySchedule(dayIdx, week).map(r => ({t:r[0], type:r[1], title:r[2], sub:r[3] || ''}));
 }
 
-function renderSchedule(container, dayIdx, week, dateKey){
+function tMin(t){ const m = String(t||'').match(/(\d{1,2}):(\d{2})/); return m ? (+m[1])*60 + (+m[2]) : null; }
+function minT(v){ v = ((v % 1440) + 1440) % 1440; return String(Math.floor(v/60)).padStart(2,'0') + ':' + String(v%60).padStart(2,'0'); }
+
+function renderSchedule(container, dayIdx, week, dateKey, isToday){
   container.innerHTML = '';
   let rows = getSchedule(dayIdx, week, dateKey);
 
   const persist = () => { schedEdits[dateKey] = rows; saveSchedEdits(); };
-  const redraw = () => renderSchedule(container, dayIdx, week, dateKey);
+  const redraw = () => renderSchedule(container, dayIdx, week, dateKey, isToday);
+
+  // --- Zusammenfassung: kcal + Trainingszeit + erledigt ---
+  let kcal = 0;
+  (MENUS[dayIdx] || []).forEach(x => { if(x[3] > 0) kcal += x[3]; });
+  const trainRow = rows.find(r => r.type === 'train');
+  const doneCount = rows.filter(r => r.done).length;
+  const sum = document.createElement('div');
+  sum.className = 'sc-summary';
+  sum.innerHTML =
+    '<div class="sc-pill">Ziel <b>' + NUTRITION[dayIdx].kcal + ' kcal</b></div>' +
+    (trainRow ? '<div class="sc-pill">Training <b>' + trainRow.t + '</b></div>' : '') +
+    '<div class="sc-pill">Erledigt <b>' + doneCount + '/' + rows.length + '</b></div>';
+  container.appendChild(sum);
+
+  // --- Trainingszeit verschieben ---
+  if(trainRow){
+    const shift = document.createElement('div');
+    shift.className = 'sc-shift';
+    shift.innerHTML = '<label>Trainingszeit</label><input type="time" value="' + (trainRow.t || '') + '">' +
+      '<button class="sc-btn">Alles mitverschieben</button>';
+    const inp = shift.querySelector('input');
+    shift.querySelector('button').addEventListener('click', () => {
+      const neu = tMin(inp.value), alt = tMin(trainRow.t);
+      if(neu === null || alt === null) return;
+      const diff = neu - alt;
+      if(!diff) return;
+      // alles ab 2h vor dem Training mitverschieben (Pre-Snack, Training, Post, Recovery, Schlaf)
+      const grenze = alt - 150;
+      rows.forEach(r => { const v = tMin(r.t); if(v !== null && v >= grenze) r.t = minT(v + diff); });
+      persist(); redraw();
+    });
+    container.appendChild(shift);
+  }
+
+  const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+  let nextIdx = -1;
+  if(isToday){
+    let best = Infinity;
+    rows.forEach((r, i) => { const v = tMin(r.t); if(v !== null && v >= nowMin && v < best && !r.done){ best = v; nextIdx = i; } });
+  }
 
   const ul = document.createElement('ul');
   ul.className = 'sched-list';
 
   rows.forEach((r, idx) => {
     const li = document.createElement('li');
-    li.className = 'sched-item ' + (r.type || '') + (r.type === 'todo' ? ' custom' : '');
+    li.className = 'sched-item ' + (r.type || '') + (r.type === 'todo' ? ' custom' : '') +
+      (r.done ? ' done' : '') + (idx === nextIdx ? ' sc-now' : '');
     li.draggable = true;
-    li.dataset.idx = idx;
     li.innerHTML =
       '<span class="sc-grip" title="Ziehen zum Verschieben">⠿</span>' +
+      '<button class="sc-check" title="Erledigt">' + (r.done ? '✓' : '') + '</button>' +
       '<input class="sc-time" value="' + (r.t || '') + '">' +
       '<div class="sc-body">' +
         '<input class="sc-title" value="' + (ICON[r.type] || '') + ' ' + (r.title || '').replace(/"/g, '&quot;') + '">' +
@@ -1183,7 +1238,8 @@ function renderSchedule(container, dayIdx, week, dateKey){
       '</div>' +
       '<button class="sc-del" title="Entfernen">×</button>';
 
-    li.querySelector('.sc-time').addEventListener('change', e => { rows[idx].t = e.target.value; persist(); });
+    li.querySelector('.sc-check').addEventListener('click', () => { rows[idx].done = !rows[idx].done; persist(); redraw(); });
+    li.querySelector('.sc-time').addEventListener('change', e => { rows[idx].t = e.target.value; persist(); redraw(); });
     li.querySelector('.sc-title').addEventListener('change', e => {
       rows[idx].title = e.target.value.replace(/^[^\w\dÄÖÜäöü]+\s*/, '');
       persist();
@@ -1198,12 +1254,10 @@ function renderSchedule(container, dayIdx, week, dateKey){
       e.preventDefault();
       li.classList.remove('over');
       const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
-      const to = idx;
-      if(isNaN(from) || from === to) return;
+      if(isNaN(from) || from === idx) return;
       const [moved] = rows.splice(from, 1);
-      rows.splice(to, 0, moved);
-      persist();
-      redraw();
+      rows.splice(idx, 0, moved);
+      persist(); redraw();
     });
 
     ul.appendChild(li);
@@ -1212,27 +1266,45 @@ function renderSchedule(container, dayIdx, week, dateKey){
 
   const act = document.createElement('div');
   act.className = 'sc-actions';
+
   const addBtn = document.createElement('button');
   addBtn.className = 'sc-btn primary';
-  addBtn.textContent = '+ To-do hinzufügen';
+  addBtn.textContent = '+ To-do';
   addBtn.addEventListener('click', () => {
     rows.push({t:'', type:'todo', title:'Neues To-do', sub:''});
-    persist();
-    redraw();
+    persist(); redraw();
     const inputs = container.querySelectorAll('.sc-title');
     const last = inputs[inputs.length - 1];
     if(last){ last.focus(); last.select(); }
   });
+
+  const sortBtn = document.createElement('button');
+  sortBtn.className = 'sc-btn';
+  sortBtn.textContent = 'Nach Zeit sortieren';
+  sortBtn.addEventListener('click', () => {
+    rows.sort((a, b) => (tMin(a.t) ?? 9999) - (tMin(b.t) ?? 9999));
+    persist(); redraw();
+  });
+
+  const copyBtn = document.createElement('button');
+  copyBtn.className = 'sc-btn';
+  copyBtn.textContent = 'Als Text kopieren';
+  copyBtn.addEventListener('click', () => {
+    const txt = rows.map(r => (r.t ? r.t + '  ' : '') + (r.done ? '[x] ' : '[ ] ') + r.title).join('\n');
+    if(navigator.clipboard) navigator.clipboard.writeText(txt);
+    copyBtn.textContent = 'Kopiert ✓';
+    setTimeout(() => copyBtn.textContent = 'Als Text kopieren', 1500);
+  });
+
   const resetBtn = document.createElement('button');
   resetBtn.className = 'sc-btn';
-  resetBtn.textContent = 'Auf Vorschlag zurücksetzen';
+  resetBtn.textContent = 'Zurücksetzen';
   resetBtn.addEventListener('click', () => {
     delete schedEdits[dateKey];
-    saveSchedEdits();
-    redraw();
+    saveSchedEdits(); redraw();
   });
-  act.appendChild(addBtn);
-  act.appendChild(resetBtn);
+
+  [addBtn, sortBtn, copyBtn, resetBtn].forEach(b => act.appendChild(b));
   container.appendChild(act);
 }
 
@@ -1274,9 +1346,9 @@ function renderTomorrow(){
   sched2.innerHTML = '<h3>Tagesplan morgen</h3>';
   const schedBox2 = document.createElement('div');
   sched2.appendChild(schedBox2);
-  renderSchedule(schedBox2, dayIdx, week, dkey);
+  renderSchedule(schedBox2, dayIdx, week, dkey, false);
   const tip2 = document.createElement('p'); tip2.className = 'tipline';
-  tip2.textContent = 'Hier kannst du morgen schon heute planen — To-dos ergänzen, Blöcke verschieben, Zeiten anpassen.';
+  tip2.textContent = 'Morgen schon heute planen — To-dos ergänzen, Blöcke verschieben, Trainingszeit anpassen (Folgetermine verschieben sich mit).';
   sched2.appendChild(tip2);
   el.appendChild(sched2);
 
