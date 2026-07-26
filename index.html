@@ -489,7 +489,8 @@ const TEMPLATES = {
       {type:'bad3', title:'3. Badminton', sub:'Technik, leicht', time:'45 Min', detail:'Kurzes Warm-up, dann Fokus auf einen schwachen Punkt (Netzspiel, Rückhand). Nach dem Freitag bewusst locker.'},
       {type:'rest', title:'Ruhetag', sub:'Aktive Erholung', time:'', detail:'Spaziergang 20–30 Min, Mobility 10 Min.'},
     ],
-    hiitSat: {title:'Bike, locker', sub:'Regeneration+', time:'~25–30 Min', detail:'Ganz lockeres Tempo, optional 4×1 Min. leicht zügig.'}
+    hiitSat: {title:'Bike, locker', sub:'Regeneration+', time:'~25–30 Min', detail:'Ganz lockeres Tempo, optional 4×1 Min. leicht zügig.'},
+    sprintSat: {title:'Sprints', sub:'Einstieg — Technik', time:'~25 Min', detail:'Warm-up 8 Min (Seilspringen, Anfersen, Steigerungen). Dann 6×30 m bei ~85%, volle Pause 90 Sek (gehend zurück). Fokus sauberes Abbremsen. Cool-down 5 Min.'}
   },
   aufbau: {
     note: 'RPE 7–8. Gym bleibt bei ~55 Min — Qualität statt Volumen. Die 3 relevanten Reize: Mo Gym, Mi Badminton, Fr Matchplay.',
@@ -535,7 +536,8 @@ const TEMPLATES = {
       {type:'bad3', title:'3. Badminton', sub:'Technik & leichtes Doppel', time:'60 Min', detail:'Netzspiel, Aufschlag, Timing, Drives-Wechsel 4×1 Min., Reaktions-Netzkills (Zheng-Siwei-Tempo, armschnell). Kein hartes Matchplay.'},
       {type:'rest', title:'Ruhetag', sub:'Frei nach Bedarf', time:'', detail:'Mobility + Spaziergang, oder ganz frei.'},
     ],
-    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~30 Min', detail:'Lockeres Tempo, optional 5×1 Min. leicht zügig / 2 Min. locker.'}
+    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~30 Min', detail:'Lockeres Tempo, optional 5×1 Min. leicht zügig / 2 Min. locker.'},
+    sprintSat: {title:'Sprints', sub:'8×30 m', time:'~30 Min', detail:'Warm-up 10 Min gründlich (Seilspringen, Lauf-ABC, 2–3 Steigerungen). Dann 8×30 m bei ~90–95%, volle Pause 90 Sek gehend zurück. Jeder Sprint maximal, sauber abbremsen. Cool-down 5 Min.'}
   },
   deload: {
     note: 'Bewusst leichte Woche. RPE 5–6, ~50–60% Volumen, kein Plyo, keine Würfe.',
@@ -558,7 +560,8 @@ const TEMPLATES = {
       {type:'bad3', title:'3. Badminton', sub:'Optional aussetzen', time:'30 Min', detail:'Ganz leicht oder ausfallen lassen.'},
       {type:'rest', title:'Ruhetag', sub:'Komplett frei', time:'', detail:'Kein Programm.'},
     ],
-    hiitSat: {title:'Bike', sub:'Deload', time:'~20 Min', detail:'Ganz locker, oder komplett auslassen.'}
+    hiitSat: {title:'Bike', sub:'Deload', time:'~20 Min', detail:'Ganz locker, oder komplett auslassen.'},
+    sprintSat: {title:'Sprints (Deload)', sub:'Reduziert', time:'~18 Min', detail:'Nur 4×30 m bei ~80%, volle Pausen — oder ganz auslassen. Deload-Woche: Frische vor Reiz.'}
   },
   peak: {
     note: '3 relevante Reize: Mo Gym A (hart), Mi Badminton, Fr Matchplay. Gym bleibt kurz — die Intensität steigt, nicht die Dauer.',
@@ -597,7 +600,8 @@ const TEMPLATES = {
       {type:'bad3', title:'3. Badminton', sub:'Leicht — Technik/Doppel', time:'45 Min', detail:'Nach dem harten Freitag nur Technik, Timing, lockeres Doppel.'},
       {type:'rest', title:'Ruhetag', sub:'Übergang vorbereiten', time:'', detail:'Aktive Erholung, dann Start Block B.'},
     ],
-    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~25 Min', detail:'Ganz locker — reine Bewegung, kein Reiz.'}
+    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~25 Min', detail:'Ganz locker — reine Bewegung, kein Reiz.'},
+    sprintSat: {title:'Sprints', sub:'8×30 m, hart', time:'~30 Min', detail:'Warm-up 10 Min gründlich. Dann 8×30 m maximal (~95%), volle Pause 2 Min. Peak-Woche: höchste Qualität, wenn frisch — sonst auf 6 reduzieren. Cool-down 5 Min.'}
   },
   scharfen: {
     note: 'Volumen runter, Schärfe hoch. Gym nur noch ~40 Min: wenige Sätze, maximale Qualität. Frische schlägt jetzt Volumen.',
@@ -632,7 +636,8 @@ const TEMPLATES = {
       {type:'bad3', title:'3. Badminton', sub:'Technik/Timing, leicht', time:'45 Min', detail:'Drives-Wechsel 4×1 Min., Reaktions-Netzkills, Täuschungen.'},
       {type:'rest', title:'Ruhetag', sub:'Vollständige Erholung', time:'', detail:'Kein Kompromiss mehr.'},
     ],
-    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~20 Min', detail:'Nur Bewegung, kein Reiz.'}
+    hiitSat: {title:'Bike, locker', sub:'Alternative', time:'~20 Min', detail:'Nur Bewegung, kein Reiz.'},
+    sprintSat: {title:'Sprints', sub:'Schärfen — 6×30 m', time:'~25 Min', detail:'Warm-up gründlich. 6×30 m maximal, volle Pause 2 Min. Weniger Menge, volle Schärfe — es geht um Spitzentempo, nicht Volumen. Cool-down.'}
   },
   taper: {
     note: 'Kraft und Schärfe erhalten, kein neues Ermüdungsrisiko.',
@@ -654,7 +659,8 @@ const TEMPLATES = {
       {type:'bad3', title:'3. Badminton', sub:'Leicht', time:'40 Min', detail:'Technik/Timing.'},
       {type:'rest', title:'Ruhetag', sub:'Komplett frei', time:'', detail:'Kein Programm.'},
     ],
-    hiitSat: {title:'Bike', sub:'Reduziert', time:'~15–20 Min', detail:'Ganz locker, nur Auffrischung.'}
+    hiitSat: {title:'Bike', sub:'Reduziert', time:'~15–20 Min', detail:'Ganz locker, nur Auffrischung.'},
+    sprintSat: {title:'Sprints (Taper)', sub:'Nur 3–4, scharf', time:'~15 Min', detail:'3–4×30 m schnell aber locker, volle Pausen. Nur das Nervensystem wach halten — kein Ermüdungsreiz vor dem Event.'}
   },
   event: {
     note: 'Letzte Woche — an deinen Badminton-Tagen (Mi/Fr) ausgerichtet. Frische schlägt jetzt jedes Training.',
@@ -736,8 +742,9 @@ function renderDayCard(phaseKey, weekStart, dayIdx){
   const dkey = toISO(date);
   const isSat = dayIdx === 5 && !!tpl.hiitSat;
   const mode = isSat ? (satToggles[dkey] || 'bad3') : null;
-  const content = (isSat && mode === 'hiit') ? tpl.hiitSat : tpl.days[dayIdx];
-  const cardType = (isSat && mode === 'hiit') ? 'hiit' : tpl.days[dayIdx].type;
+  let content = tpl.days[dayIdx], cardType = tpl.days[dayIdx].type;
+  if(isSat && mode === 'hiit'){ content = tpl.hiitSat; cardType = 'hiit'; }
+  else if(isSat && mode === 'sprint' && tpl.sprintSat){ content = tpl.sprintSat; cardType = 'hiit'; }
   const log = dayLog[dkey] || {};
   const exLog = log.ex || {};
 
@@ -748,7 +755,8 @@ function renderDayCard(phaseKey, weekStart, dayIdx){
   if(isSat){
     satHtml = '<div class="sattoggle">' +
       '<button class="stbtn '+(mode==='bad3'?'active':'')+'" data-mode="bad3">3.Bad</button>' +
-      '<button class="stbtn '+(mode==='hiit'?'active':'')+'" data-mode="hiit">Bike/HIIT</button>' +
+      '<button class="stbtn '+(mode==='sprint'?'active':'')+'" data-mode="sprint">Sprints</button>' +
+      '<button class="stbtn '+(mode==='hiit'?'active':'')+'" data-mode="hiit">Bike</button>' +
     '</div>';
   }
 
@@ -1329,7 +1337,9 @@ function renderTomorrow(){
   const dkey = toISO(tmr);
   const isSat = dayIdx === 5 && !!tpl.hiitSat;
   const mode = isSat ? (satToggles[dkey] || 'bad3') : null;
-  const content = (isSat && mode === 'hiit') ? tpl.hiitSat : tpl.days[dayIdx];
+  let content = tpl.days[dayIdx];
+  if(isSat && mode === 'hiit') content = tpl.hiitSat;
+  else if(isSat && mode === 'sprint' && tpl.sprintSat) content = tpl.sprintSat;
   const n = NUTRITION[dayIdx];
   const m = MENUS[dayIdx];
   const rec = RECOVERY[dayIdx] || {items:[]};
