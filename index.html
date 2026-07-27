@@ -452,26 +452,30 @@ const DAYNAMES = ['Mo','Di','Mi','Do','Fr','Sa','So'];
 
 const TEMPLATES = {
   reaktivierung: {
-    note: 'RPE 6→7 (steigt zügig über die 2 Wochen). Zwei Ganzkörper-Tage mit Grundübungen im Zentrum — kein Upper/Lower-Split. A = Kniebeuge-fokus, B = Hüft-/Zug-fokus. Jeder Muskel 2×/Woche.',
+    note: 'RPE 6→7 (steigt zügig über die 2 Wochen). Zwei athletik-lastige Ganzkörpertage: Grundübungen + direkte Armarbeit + Rücken + je ein technikbetonter Complex. A = Kniebeuge/Push/Gesäss, B = Hüfte/Pull/Copenhagen. Jeder Muskel 2×/Woche, aber Adduktoren nur 1× (Di) — Erholung bis zum Badminton am Mi. Complex mit moderater Last: Technik vor Ermüdung.',
     days: [
-      {type:'gym', title:'Ganzkörper A', sub:'Kniebeuge-fokus + Push', time:'55 Min', exercises:[
+      {type:'gym', title:'Ganzkörper A', sub:'Kniebeuge + Push + Complex', time:'65 Min', exercises:[
         {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min · Hüftmobilität, Glute Bridge 15, Band Pull-aparts 15, tiefe Hocke 3×20 Sek · 2 Aufwärmsätze Kniebeuge', r:'—'},
         {n:'CMJ (Countermovement Jumps)', p:'3×5 · explosiv, wenn frisch — Split-Step-Muster', r:'75 Sek.'},
-        {n:'Kniebeugen', p:'3×8 · RPE 6→7 über die 2 Wochen (Ref. 55–65 kg)', r:'2 Min.'},
+        {n:'Kniebeugen', p:'3×8 · RPE 6→7 (Ref. 55–65 kg)', r:'2 Min.'},
         {n:'Bankdrücken', p:'3×8 · RPE 6–7', r:'90 Sek.'},
-        {n:'Rudern (Langhantel/Kabel)', p:'3×10 · moderat', r:'90 Sek.'},
-        {n:'Ausfallschritte (gehend, Kurzhantel)', p:'3×8/Bein · einbeinige Kraft in Spielposition', r:'75 Sek.'},
-        {n:'Finisher: Iso-Lunge-Hold', p:'2×20 Sek./Bein in tiefer Badminton-Lunge', r:'30 Sek.'},
+        {n:'Rudern (Langhantel/Kabel)', p:'3×10 · moderat — Rückenbreite', r:'90 Sek.'},
+        {n:'Bulgarian Split Squat', p:'3×8/Bein · einbeinige Kraft in Spielposition', r:'75 Sek.'},
+        {n:'Trizeps (Dips oder Kabel) + Bizeps (Kurzhantel)', p:'je 3×10 · im Wechsel (Supersatz) — Armkraft für Schlaghärte', r:'60 Sek.'},
+        {n:'Complex (technikbetont, leichte KH, ohne Ablegen)', p:'3 Runden: 6 KH-Kniebeugen → 6 Ausfallschritte/Bein → 6 Push Press → 6 Rows → 20 Sek Iso-Lunge/Bein', r:'2 Min.'},
+        {n:'Hip Thrust (Gesäss)', p:'2×12 · Hüftstreckkraft — der Motor für Sprünge & Antritte', r:'45 Sek.'},
         {n:'Cool-down', p:'4 Min dehnen: Hüftbeuger, Quads, Brust', r:'—'},
       ]},
-      {type:'gym', title:'Ganzkörper B', sub:'Hüfte-fokus + Pull + Rotation', time:'55 Min', exercises:[
+      {type:'gym', title:'Ganzkörper B', sub:'Hüfte + Pull + Complex', time:'65 Min', exercises:[
         {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min · Theraband-Aussenrotation 15/Seite, Y-T-W, Beinpendel · 2 Aufwärmsätze Kreuzheben', r:'—'},
         {n:'Slam-Ball-Rotationswürfe (Wand)', p:'3×5/Seite · explosiv — Hüfte initiiert, Arm liefert ab', r:'75 Sek.'},
         {n:'Rumänisches Kreuzheben (RDL)', p:'3×8 · RPE 6→7 — Hüftkette & Hamstrings', r:'2 Min.'},
-        {n:'Klimmzüge / Lat Pulldown', p:'3×8 · RPE 6–7', r:'90 Sek.'},
-        {n:'Schulterdrücken (stehend)', p:'3×8 · moderat — Überkopfkraft für Overhead-Schläge', r:'90 Sek.'},
-        {n:'Bulgarian Split Squat', p:'3×8/Bein · einbeinige Kontrolle & Balance', r:'75 Sek.'},
-        {n:'Finisher: Pallof + Side Plank', p:'2 Runden: Pallof 10/Seite, Side Plank 25 Sek./Seite', r:'30 Sek.'},
+        {n:'Klimmzüge / Lat Pulldown', p:'3×8 · RPE 6–7 — Rückenbreite & Zugkraft', r:'90 Sek.'},
+        {n:'Schulterdrücken (stehend)', p:'3×8 · moderat — Überkopfkraft', r:'90 Sek.'},
+        {n:'Ausfallschritte (gehend, KH)', p:'3×8/Bein · einbeinig, Balance', r:'75 Sek.'},
+        {n:'Face Pulls + Bizeps-Curl', p:'je 3×12 · Supersatz — hintere Schulter (Prävention) & Armkraft', r:'60 Sek.'},
+        {n:'Farmer Walk Complex', p:'3 Runden: 20 m Farmer Walk (schwer) → 8 KH-Kniebeugen → 8 Push Press → 10 Russian-Twist-Wurf an Wand', r:'2 Min.'},
+        {n:'Copenhagen Hold + Pallof', p:'2 Runden: Copenhagen 20 Sek./Seite, Pallof 10/Seite', r:'45 Sek.'},
         {n:'Cool-down', p:'4 Min dehnen: Hamstrings, Lat, Schultern', r:'—'},
       ]},
       {type:'bad', title:'Badminton', sub:'Technik + Multi-Shuttle', time:'60–75 Min', blocks:[
