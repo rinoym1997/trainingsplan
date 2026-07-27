@@ -452,26 +452,27 @@ const DAYNAMES = ['Mo','Di','Mi','Do','Fr','Sa','So'];
 
 const TEMPLATES = {
   reaktivierung: {
-    note: 'RPE 6–7. Wiedereinstieg: Technik vor Gewicht. Prinzip überall: ein Reiz pro Qualität, die badmintonspezifischste Variante gewinnt. Gym ~50 Min, nicht länger.',
+    note: 'RPE 6→7 (steigt zügig über die 2 Wochen). Zwei Ganzkörper-Tage mit Grundübungen im Zentrum — kein Upper/Lower-Split. A = Kniebeuge-fokus, B = Hüft-/Zug-fokus. Jeder Muskel 2×/Woche.',
     days: [
-      {type:'gym', title:'Gym A', sub:'Beine · Kraft + Explosivität', time:'50 Min', exercises:[
-        {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min · Glute Bridge 15 · Clamshells 12/Seite · Weltgrösste Dehnung + tiefe Hocke 3×20 Sek.', r:'—'},
-        {n:'CMJ (Countermovement Jumps)', p:'3×5 · tief absenken, sofort maximal hoch — Split-Step-Muster', r:'75 Sek.'},
-        {n:'Kniebeugen', p:'3×8 · RPE 6–7 (Ref. 55–60 kg)', r:'90 Sek.'},
-        {n:'RDL oder Hip Thrust', p:'3×10 · RPE 6–7 — Hüftkette', r:'75 Sek.'},
-        {n:'Split Squat', p:'3×8/Bein · leicht — einbeinige Kontrolle', r:'60 Sek.'},
+      {type:'gym', title:'Ganzkörper A', sub:'Kniebeuge-fokus + Push', time:'55 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min · Hüftmobilität, Glute Bridge 15, Band Pull-aparts 15, tiefe Hocke 3×20 Sek · 2 Aufwärmsätze Kniebeuge', r:'—'},
+        {n:'CMJ (Countermovement Jumps)', p:'3×5 · explosiv, wenn frisch — Split-Step-Muster', r:'75 Sek.'},
+        {n:'Kniebeugen', p:'3×8 · RPE 6→7 über die 2 Wochen (Ref. 55–65 kg)', r:'2 Min.'},
+        {n:'Bankdrücken', p:'3×8 · RPE 6–7', r:'90 Sek.'},
+        {n:'Rudern (Langhantel/Kabel)', p:'3×10 · moderat', r:'90 Sek.'},
+        {n:'Ausfallschritte (gehend, Kurzhantel)', p:'3×8/Bein · einbeinige Kraft in Spielposition', r:'75 Sek.'},
         {n:'Finisher: Iso-Lunge-Hold', p:'2×20 Sek./Bein in tiefer Badminton-Lunge', r:'30 Sek.'},
-        {n:'Cool-down', p:'4 Min dehnen: Hüftbeuger, Quads, Hamstrings, Waden', r:'—'},
+        {n:'Cool-down', p:'4 Min dehnen: Hüftbeuger, Quads, Brust', r:'—'},
       ]},
-      {type:'gym', title:'Gym B', sub:'Oberkörper + Rotation', time:'45 Min', exercises:[
-        {n:'Warm-up + Aktivierung', p:'Seilspringen 3 Min · Theraband-Aussenrotation 15/Seite · Band Pull-aparts 15 · T-Spine-Rotation', r:'—'},
-        {n:'Theraband-Rotationen (stehend)', p:'3×12/Seite · langsam, Hüfte führt — Muster lernen', r:'40 Sek.'},
-        {n:'Lunge mit Rotation (Körpergewicht)', p:'3×8/Seite · Rotation aus der Ausfallschritt-Position', r:'45 Sek.'},
-        {n:'Bankdrücken / Liegestütze', p:'3×10 · leicht-moderat', r:'75 Sek.'},
-        {n:'Rudern', p:'3×10 · moderat', r:'75 Sek.'},
-        {n:'Lat Pulldown / Klimmzüge', p:'3×10 · RPE 6–7', r:'75 Sek.'},
-        {n:'Core: Pallof + Side Plank', p:'2 Runden: Pallof 10/Seite, Side Plank 25 Sek./Seite', r:'30 Sek.'},
-        {n:'Cool-down', p:'3 Min dehnen: Brust, Lat, Schultern', r:'—'},
+      {type:'gym', title:'Ganzkörper B', sub:'Hüfte-fokus + Pull + Rotation', time:'55 Min', exercises:[
+        {n:'Warm-up + Aktivierung', p:'Seilspringen 4 Min · Theraband-Aussenrotation 15/Seite, Y-T-W, Beinpendel · 2 Aufwärmsätze Kreuzheben', r:'—'},
+        {n:'Slam-Ball-Rotationswürfe (Wand)', p:'3×5/Seite · explosiv — Hüfte initiiert, Arm liefert ab', r:'75 Sek.'},
+        {n:'Rumänisches Kreuzheben (RDL)', p:'3×8 · RPE 6→7 — Hüftkette & Hamstrings', r:'2 Min.'},
+        {n:'Klimmzüge / Lat Pulldown', p:'3×8 · RPE 6–7', r:'90 Sek.'},
+        {n:'Schulterdrücken (stehend)', p:'3×8 · moderat — Überkopfkraft für Overhead-Schläge', r:'90 Sek.'},
+        {n:'Bulgarian Split Squat', p:'3×8/Bein · einbeinige Kontrolle & Balance', r:'75 Sek.'},
+        {n:'Finisher: Pallof + Side Plank', p:'2 Runden: Pallof 10/Seite, Side Plank 25 Sek./Seite', r:'30 Sek.'},
+        {n:'Cool-down', p:'4 Min dehnen: Hamstrings, Lat, Schultern', r:'—'},
       ]},
       {type:'bad', title:'Badminton', sub:'Technik + Multi-Shuttle', time:'60–75 Min', blocks:[
         {n:'Warm-up', p:'Seilspringen 3 Min · Hüft-Mobility 2 Min · Einschlagen 10 Min'},
